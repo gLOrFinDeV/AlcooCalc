@@ -8,6 +8,21 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-09-13 (suite 4)
+- Fait : correction de deux régressions de traduction signalées par l'utilisateur. (1) Le message
+  "Copié !" après "Copy results" en anglais : le code était déjà correct (`copiedMsg` traduit dans
+  les deux langues dans `js/translations.js`) — non reproductible en local, probablement un
+  service worker resté sur un ancien cache côté utilisateur. (2) La variable `ΔV_sucre` dans la
+  formule détaillée et ses étapes de calcul restait en français même en mode anglais : le LaTeX
+  était codé en dur dans `js/formulas.js` sans dépendre de la langue. `generateFormulaSteps()` et
+  `renderFormula()` acceptent désormais un paramètre `lang` et choisissent `\Delta V_{sucre}` ou
+  `\Delta V_{sugar}` en conséquence ; `js/app.js` transmet `getLanguage()` à l'appel de
+  `renderFormula()`. Cache PWA bumpé à `alcoocalc-v24` (aide aussi à rafraîchir le cache côté
+  utilisateur pour le point (1)).
+- Testé dans le navigateur (FR et EN, cache et service worker vidés) : la formule détaillée affiche
+  bien `ΔV_sucre` en français et `ΔV_sugar` en anglais, dans la formule principale et les 3 étapes
+  qui la référencent.
+
 ## 2026-09-13 (suite 3)
 - Fait : implémentation de l'**historique cliquable** (deuxième piste v2 mise en œuvre). Chaque
   ligne de `#historyList` est désormais scindée en deux boutons : `.history-row__main` (recharge

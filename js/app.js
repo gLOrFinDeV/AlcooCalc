@@ -210,7 +210,7 @@ function compute({ recordHistory } = { recordHistory: false }) {
   renderResults(results);
 
   if (els.formulaSection.open) {
-    renderFormula(els.formulaContainer, els.formulaSteps, v0, input.c0, input.cf, input.sconc, kLg, results);
+    renderFormula(els.formulaContainer, els.formulaSteps, v0, input.c0, input.cf, input.sconc, kLg, results, getLanguage());
   }
 
   saveInputs(Object.assign({}, input, { v0 }));

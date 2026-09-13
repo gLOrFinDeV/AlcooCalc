@@ -46,8 +46,9 @@ function calculateDilution(V0, C0, Cf, S_conc, k) {
   return { feasible: true, errors: [], Vf, ms, expansion, Ve };
 }
 
-function generateFormulaSteps(V0, C0, Cf, S_conc, k, results) {
+function generateFormulaSteps(V0, C0, Cf, S_conc, k, results, lang) {
   const fmt = (n, d = 3) => Number(n).toFixed(d);
+  const dV = lang === 'en' ? '\\Delta V_{sugar}' : '\\Delta V_{sucre}';
   return [
     {
       tex: 'V_f = \\dfrac{V_0 \\cdot C_0}{C_1}',
@@ -58,28 +59,28 @@ function generateFormulaSteps(V0, C0, Cf, S_conc, k, results) {
       substituted: `m_s = ${fmt(S_conc, 1)} \\times ${fmt(results.Vf)} = ${fmt(results.ms, 1)}\\ \\text{g}`,
     },
     {
-      tex: '\\Delta V_{sucre} = k \\cdot m_s',
-      substituted: `\\Delta V_{sucre} = ${fmt(k, 5)} \\times ${fmt(results.ms, 1)} = ${fmt(results.expansion)}\\ \\text{L} = ${fmt(results.expansion * 1000, 1)}\\ \\text{mL}`,
+      tex: `${dV} = k \\cdot m_s`,
+      substituted: `${dV} = ${fmt(k, 5)} \\times ${fmt(results.ms, 1)} = ${fmt(results.expansion)}\\ \\text{L} = ${fmt(results.expansion * 1000, 1)}\\ \\text{mL}`,
     },
     {
-      tex: 'V_e = V_f - V_0 - \\Delta V_{sucre}',
+      tex: `V_e = V_f - V_0 - ${dV}`,
       substituted: `V_e = ${fmt(results.Vf)} - ${fmt(V0)} - ${fmt(results.expansion)} = ${fmt(results.Ve)}\\ \\text{L}`,
     },
   ];
 }
 
-function renderFormula(containerEl, stepsContainerEl, V0, C0, Cf, S_conc, k, results) {
+function renderFormula(containerEl, stepsContainerEl, V0, C0, Cf, S_conc, k, results, lang) {
   if (typeof katex === 'undefined') return;
 
-  const mainFormula =
-    '\\begin{aligned} V_f &= \\dfrac{V_0 \\cdot C_0}{C_1} \\\\ m_s &= S_{conc} \\cdot V_f \\\\ \\Delta V_{sucre} &= k \\cdot m_s \\\\ V_e &= V_f - V_0 - \\Delta V_{sucre} \\end{aligned}';
+  const dV = lang === 'en' ? '\\Delta V_{sugar}' : '\\Delta V_{sucre}';
+  const mainFormula = `\\begin{aligned} V_f &= \\dfrac{V_0 \\cdot C_0}{C_1} \\\\ m_s &= S_{conc} \\cdot V_f \\\\ ${dV} &= k \\cdot m_s \\\\ V_e &= V_f - V_0 - ${dV} \\end{aligned}`;
 
   katex.render(mainFormula, containerEl, { throwOnError: false, displayMode: true });
 
   stepsContainerEl.innerHTML = '';
   if (!results.feasible && !Number.isFinite(results.Vf)) return;
 
-  const steps = generateFormulaSteps(V0, C0, Cf, S_conc, k, results);
+  const steps = generateFormulaSteps(V0, C0, Cf, S_conc, k, results, lang);
   steps.forEach((step, i) => {
     const line = document.createElement('div');
     line.className = 'formula-step';
