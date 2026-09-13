@@ -39,6 +39,11 @@ tags: [journal]
   ajoutée (`stickyWater`/`stickySugar`). Cache PWA bumpé à `alcoocalc-v14`.
 - Testé dans le navigateur en émulation mobile (375×812) : bandeau visible et à jour pendant les
   réglages, clic → scroll fluide vers les résultats complets ; absent en desktop (≥1024px).
+- Fait : correction signalée par l'utilisateur (capture d'écran) — la bordure supérieure du bandeau
+  collant traversait tout l'écran alors que les widgets ont une marge de 1rem de chaque côté.
+  `.sticky-summary` passe de `left:0; right:0; width:100%` à `left:1rem; right:1rem;` (padding
+  horizontal retiré en compensation) pour que la ligne de séparation fasse la même largeur que les
+  cartes. Cache PWA bumpé à `alcoocalc-v15`.
 
 ## 2026-09-10
 - Fait : transfert complet du dépôt GitHub du compte `RobJBee` vers le nouveau compte

@@ -505,15 +505,15 @@ input[type='range']::-moz-range-thumb {
   .sticky-summary {
     display: flex;
     position: fixed;
-    left: 0;
-    right: 0;
+    left: 1rem;
+    right: 1rem;
     bottom: 0;
     z-index: 500;
-    width: 100%;
+    width: auto;
     border: none;
     border-top: 1px solid var(--border-color);
     background: var(--bg-secondary);
-    padding: 0.55rem 1rem calc(0.55rem + env(safe-area-inset-bottom));
+    padding: 0.55rem 0 calc(0.55rem + env(safe-area-inset-bottom));
     font-family: var(--font-mono);
     text-align: left;
     cursor: pointer;
