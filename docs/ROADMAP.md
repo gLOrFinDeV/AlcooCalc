@@ -47,10 +47,13 @@ tags: [roadmap]
 - ✅ **Vert principal assombri** : `--terminal-green` passe de `#00FF41` à `#00CC52` (vert plus
   sombre que l'original mais avec plus de contraste que `#00993D`, testé puis ajusté en navigateur
   suite au retour de l'utilisateur).
+- ✅ **Résumé collant sur mobile** : bandeau fixe en bas d'écran (< 768px uniquement, masqué en
+  paysage sur petite hauteur) affichant Eau/Sucre en continu ; clic dessus → scroll fluide jusqu'à
+  la section Résultats complète. Voir [`css/styles.css`](../css/styles.css) et
+  [`js/app.js`](../js/app.js).
 
 ## 🔮 v2 — Pistes UX (validées par l'utilisateur le 2026-09-07)
-- **Résultat "collant" sur mobile** : un résumé compact (eau/sucre) reste visible en bas d'écran
-  pendant qu'on ajuste les sliders, pour éviter l'aller-retour de scroll entre paramètres et résultats.
+- ✅ **Résultat "collant" sur mobile** : implémenté, voir "v2 — En cours" ci-dessus.
 - **Historique cliquable** : cliquer sur une entrée recharge ces valeurs dans les champs ; ajouter
   aussi la suppression d'une entrée individuelle (pas seulement "Effacer tout").
 - **Aide contextuelle (?)** : petites infobulles expliquant les champs moins évidents ("Sucre visé",

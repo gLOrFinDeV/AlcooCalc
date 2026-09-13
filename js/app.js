@@ -44,6 +44,9 @@ function cacheEls() {
   els.resultSugar = $('resultSugar');
   els.resultFinalVolume = $('resultFinalVolume');
   els.resultExpansion = $('resultExpansion');
+  els.stickySummary = $('stickySummary');
+  els.stickyWaterValue = $('stickyWaterValue');
+  els.stickySugarValue = $('stickySugarValue');
   els.btnReset = $('btnReset');
   els.btnCopy = $('btnCopy');
   els.copyFeedback = $('copyFeedback');
@@ -171,6 +174,8 @@ function renderResults(results) {
     els.resultSugar.textContent = '—';
     els.resultFinalVolume.textContent = '—';
     els.resultExpansion.textContent = '—';
+    els.stickyWaterValue.textContent = '—';
+    els.stickySugarValue.textContent = '—';
     showErrors(results.errors);
     return;
   }
@@ -179,6 +184,8 @@ function renderResults(results) {
   els.resultSugar.textContent = `${results.ms.toFixed(1)} g`;
   els.resultFinalVolume.textContent = `${results.Vf.toFixed(3)} ${t('unitL')}`;
   els.resultExpansion.textContent = `${(results.expansion * 1000).toFixed(1)} mL`;
+  els.stickyWaterValue.textContent = `${results.Ve.toFixed(3)} ${t('unitL')}`;
+  els.stickySugarValue.textContent = `${results.ms.toFixed(1)} g`;
 }
 
 function compute({ recordHistory } = { recordHistory: false }) {
@@ -351,6 +358,14 @@ function wireEvents() {
 
   els.formulaSection.addEventListener('toggle', () => {
     compute({ recordHistory: false });
+  });
+
+  els.stickySummary.addEventListener('click', () => {
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.getElementById('resultsTitle').scrollIntoView({
+      behavior: reduceMotion ? 'auto' : 'smooth',
+      block: 'start',
+    });
   });
 
   els.langButtons.forEach((btn) => {

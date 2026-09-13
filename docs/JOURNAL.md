@@ -27,6 +27,18 @@ tags: [journal]
   pour la proposition 1 : `--terminal-green` passe à **`#00CC52`** (rgb 0, 204, 82). Même
   traitement appliqué (halos CSS, traînée du splash, `theme_color` du manifest). Cache PWA bumpé à
   `alcoocalc-v13`.
+- Fait : implémentation du **résumé collant sur mobile** (première piste v2 mise en œuvre). Un
+  bandeau `<button>` fixe (`#stickySummary`) apparaît en bas d'écran uniquement sous 768px de
+  large (masqué en paysage sur petite hauteur, comme `.app-main` en grille 2 colonnes), affichant
+  en continu l'eau et le sucre à ajouter. `renderResults()` (`js/app.js`) le met à jour en même
+  temps que le panneau complet ; un clic dessus fait défiler la page jusqu'à `#resultsTitle`
+  (`scrollIntoView`, `behavior: 'auto'` si `prefers-reduced-motion`). Le bandeau est
+  `aria-hidden="true"` + `tabindex="-1"` : il duplique visuellement les résultats déjà présents et
+  accessibles plus bas, donc exclu de l'arbre d'accessibilité pour éviter une double annonce (le
+  traitement accessibilité complet — aria-live, etc. — reste une piste v2 séparée). i18n FR/EN
+  ajoutée (`stickyWater`/`stickySugar`). Cache PWA bumpé à `alcoocalc-v14`.
+- Testé dans le navigateur en émulation mobile (375×812) : bandeau visible et à jour pendant les
+  réglages, clic → scroll fluide vers les résultats complets ; absent en desktop (≥1024px).
 
 ## 2026-09-10
 - Fait : transfert complet du dépôt GitHub du compte `RobJBee` vers le nouveau compte
