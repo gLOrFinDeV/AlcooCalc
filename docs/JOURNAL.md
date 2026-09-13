@@ -8,6 +8,22 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-09-13 (suite 3)
+- Fait : implémentation de l'**historique cliquable** (deuxième piste v2 mise en œuvre). Chaque
+  ligne de `#historyList` est désormais scindée en deux boutons : `.history-row__main` (recharge
+  tous les paramètres de l'entrée — V₀, V₁ si l'entrée avait un volume cible actif, C₀, C₁, sucre
+  visé, k — via `applyInputsToForm()` puis `compute({recordHistory:false})`, sans dupliquer
+  l'entrée dans l'historique) et `.history-row__delete` (bouton "×", supprime uniquement cette
+  entrée via `deleteHistoryEntry(index)`, `event.stopPropagation()` pour ne pas déclencher le
+  rechargement). `pushHistory()` enregistre désormais aussi `vfTarget` (null si absent) pour que le
+  rechargement restaure fidèlement l'état d'origine ; le champ `k` reste stocké en L/g dans
+  l'historique (comme avant), donc reconverti ×1000 vers mL/g au rechargement pour l'affichage.
+  i18n FR/EN ajoutée (`historyReloadLabel`, `historyDeleteLabel`, en `aria-label` sur les deux
+  boutons). Cache PWA bumpé à `alcoocalc-v19`.
+- Testé dans le navigateur (FR et EN) : clic sur une entrée recharge exactement les bons résultats
+  sans dupliquer l'historique ; clic sur "×" supprime uniquement l'entrée visée, le reste de la
+  liste se met à jour correctement ; "Effacer l'historique" continue de tout vider.
+
 ## 2026-09-13 (suite)
 - Fait : renommage esthétique de deux libellés, à la demande de l'utilisateur (capture d'écran du
   champ "Volume final"). Clarifié via question : la nouvelle variable du champ volume est bien

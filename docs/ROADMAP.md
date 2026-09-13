@@ -51,11 +51,13 @@ tags: [roadmap]
   paysage sur petite hauteur) affichant Eau/Sucre en continu ; clic dessus → scroll fluide jusqu'à
   la section Résultats complète. Voir [`css/styles.css`](../css/styles.css) et
   [`js/app.js`](../js/app.js).
+- ✅ **Historique cliquable** : cliquer sur une entrée recharge tous ses paramètres (V₀/V₁, C₀, C₁,
+  sucre, k) dans les champs ; bouton "×" dédié pour supprimer une entrée individuellement, en plus
+  d'"Effacer l'historique" pour tout vider. Voir [`js/app.js`](../js/app.js).
 
 ## 🔮 v2 — Pistes UX (validées par l'utilisateur le 2026-09-07)
 - ✅ **Résultat "collant" sur mobile** : implémenté, voir "v2 — En cours" ci-dessus.
-- **Historique cliquable** : cliquer sur une entrée recharge ces valeurs dans les champs ; ajouter
-  aussi la suppression d'une entrée individuelle (pas seulement "Effacer tout").
+- ✅ **Historique cliquable** : implémenté, voir "v2 — En cours" ci-dessus.
 - **Aide contextuelle (?)** : petites infobulles expliquant les champs moins évidents ("Sucre visé",
   "Coefficient d'expansion").
 - **Accessibilité + erreurs visibles** : `aria-live` pour que les lecteurs d'écran annoncent le

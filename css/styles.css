@@ -458,12 +458,48 @@ input[type='range']::-moz-range-thumb {
 
 .history-row {
   display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-  padding: 0.5rem 0.6rem;
+  align-items: stretch;
   border: 1px solid var(--border-color);
   border-radius: 2px;
   font-size: 0.78rem;
+}
+
+.history-row__main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+  padding: 0.5rem 0.6rem;
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-family: var(--font-mono);
+  font-size: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.history-row__main:hover {
+  background: rgba(0, 204, 82, 0.08);
+}
+
+.history-row__delete {
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  border-left: 1px dashed var(--border-color);
+  color: var(--terminal-dim);
+  font-family: var(--font-mono);
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 0 0.8rem;
+  cursor: pointer;
+}
+
+.history-row__delete:hover {
+  color: var(--error-color);
+  background: rgba(255, 59, 48, 0.08);
 }
 
 .history-row__date {

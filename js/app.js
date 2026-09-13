@@ -223,6 +223,7 @@ function pushHistory(input, results) {
   history.unshift({
     date: new Date().toISOString(),
     v0: input.v0,
+    vfTarget: Number.isFinite(input.vfTarget) ? input.vfTarget : null,
     c0: input.c0,
     cf: input.cf,
     sconc: input.sconc,
@@ -233,6 +234,28 @@ function pushHistory(input, results) {
     expansion: results.expansion,
   });
   saveHistory(history.slice(0, MAX_HISTORY));
+  renderHistory();
+}
+
+function loadHistoryEntry(entry) {
+  applyInputsToForm({
+    v0: entry.v0,
+    vfTarget: Number.isFinite(entry.vfTarget) ? entry.vfTarget : null,
+    c0: entry.c0,
+    cf: entry.cf,
+    sconc: entry.sconc,
+    k: entry.k * 1000, // stocké en L/g dans l'historique, le champ affiche du mL/g
+    preset: 'custom',
+    advancedOpen: els.advancedSection.open,
+    formulaOpen: els.formulaSection.open,
+  });
+  compute({ recordHistory: false });
+}
+
+function deleteHistoryEntry(index) {
+  const history = loadHistory();
+  history.splice(index, 1);
+  saveHistory(history);
   renderHistory();
 }
 
@@ -248,15 +271,34 @@ function renderHistory() {
     return;
   }
 
-  history.forEach((entry) => {
+  history.forEach((entry, index) => {
     const row = document.createElement('div');
     row.className = 'history-row';
+
     const d = new Date(entry.date);
-    row.innerHTML = `
+    const main = document.createElement('button');
+    main.type = 'button';
+    main.className = 'history-row__main';
+    main.setAttribute('aria-label', t('historyReloadLabel'));
+    main.innerHTML = `
       <span class="history-row__date">${d.toLocaleString()}</span>
       <span class="history-row__spec">${entry.v0}${t('unitL')} · ${entry.c0}${t('unitPercent')} → ${entry.cf}${t('unitPercent')}</span>
       <span class="history-row__result">${t('resultWater')}: ${entry.ve.toFixed(3)}${t('unitL')} · ${t('resultSugar')}: ${entry.ms.toFixed(1)}g</span>
     `;
+    main.addEventListener('click', () => loadHistoryEntry(entry));
+
+    const del = document.createElement('button');
+    del.type = 'button';
+    del.className = 'history-row__delete';
+    del.setAttribute('aria-label', t('historyDeleteLabel'));
+    del.textContent = '×';
+    del.addEventListener('click', (event) => {
+      event.stopPropagation();
+      deleteHistoryEntry(index);
+    });
+
+    row.appendChild(main);
+    row.appendChild(del);
     els.historyList.appendChild(row);
   });
 }
