@@ -496,20 +496,18 @@ input[type='range']::-moz-range-thumb {
   display: none;
 }
 
-/* Mobile only : résumé collant des résultats en bas d'écran */
+/* Mobile only : résumé collant des résultats en bas d'écran.
+   position: sticky (plutôt que fixed) pour que le bandeau suive le flux
+   normal de la page : il hérite alors exactement de la même largeur que
+   les cartes voisines (enfant du même conteneur flex), sans dépendre
+   d'un calcul de marge indépendant qui peut diverger du viewport réel
+   selon le moteur de rendu. */
 @media (max-width: 767px) {
-  body {
-    padding-bottom: 5.5rem;
-  }
-
   .sticky-summary {
     display: flex;
-    position: fixed;
-    left: 1rem;
-    right: 1rem;
+    position: sticky;
     bottom: 0;
     z-index: 500;
-    width: auto;
     border: none;
     border-top: 1px solid var(--border-color);
     background: var(--bg-secondary);
@@ -604,9 +602,5 @@ input[type='range']::-moz-range-thumb {
 
   .sticky-summary {
     display: none;
-  }
-
-  body {
-    padding-bottom: 3rem;
   }
 }

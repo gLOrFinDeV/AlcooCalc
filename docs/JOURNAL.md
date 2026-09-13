@@ -44,6 +44,19 @@ tags: [journal]
   `.sticky-summary` passe de `left:0; right:0; width:100%` à `left:1rem; right:1rem;` (padding
   horizontal retiré en compensation) pour que la ligne de séparation fasse la même largeur que les
   cartes. Cache PWA bumpé à `alcoocalc-v15`.
+- Fait : l'ajustement précédent n'a pas suffi — l'utilisateur a mesuré (via capture zoomée) un
+  écart de 10px de chaque côté entre le bandeau et les cartes, reproductible uniquement dans le
+  navigateur intégré de Claude Code (pas ailleurs). Cause : `position: fixed` calcule sa largeur
+  par rapport au viewport tel que le moteur de rendu le définit, ce qui peut diverger légèrement du
+  calcul utilisé pour les éléments en flux normal selon l'environnement de rendu. Plutôt que
+  d'ajuster à nouveau des marges à la main, changement d'architecture : `#stickySummary` déplacé à
+  l'intérieur de `<main class="app-main">` (dernier enfant, après `.card--history`) et passé en
+  `position: sticky; bottom: 0;` au lieu de `fixed`. En tant qu'enfant du même conteneur flex que
+  les cartes (`align-items: stretch` par défaut), il hérite mathématiquement de la même largeur —
+  vérifié au pixel près (`getBoundingClientRect()` identique des deux côtés) là où le bug se
+  produisait. Effet secondaire positif : le bandeau se fond naturellement à sa place juste avant le
+  footer une fois arrivé en bas de page, donc le `padding-bottom` de secours sur `body` n'est plus
+  nécessaire (retiré). Cache PWA bumpé à `alcoocalc-v16`.
 
 ## 2026-09-10
 - Fait : transfert complet du dépôt GitHub du compte `RobJBee` vers le nouveau compte
