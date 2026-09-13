@@ -18,6 +18,7 @@ const MAX_HISTORY = 10;
 
 const els = {};
 let lastResults = null;
+let favoritesFilterActive = false;
 
 function $(id) {
   return document.getElementById(id);
@@ -55,6 +56,7 @@ function cacheEls() {
   els.formulaSteps = $('formulaSteps');
   els.historyList = $('historyList');
   els.btnClearHistory = $('btnClearHistory');
+  els.btnFavoriteFilter = $('btnFavoriteFilter');
   els.langButtons = document.querySelectorAll('[data-lang-btn]');
 }
 
@@ -232,9 +234,29 @@ function pushHistory(input, results) {
     ms: results.ms,
     vf: results.Vf,
     expansion: results.expansion,
+    favorite: false,
   });
   saveHistory(history.slice(0, MAX_HISTORY));
   renderHistory();
+}
+
+function toggleFavorite(index) {
+  const history = loadHistory();
+  if (!history[index]) return;
+  history[index].favorite = !history[index].favorite;
+  saveHistory(history);
+  renderHistory();
+}
+
+function setFavoritesFilter(active) {
+  favoritesFilterActive = active;
+  els.btnFavoriteFilter.textContent = favoritesFilterActive ? '★' : '☆';
+  els.btnFavoriteFilter.classList.toggle('is-active', favoritesFilterActive);
+  els.btnFavoriteFilter.setAttribute('aria-pressed', String(favoritesFilterActive));
+  els.btnFavoriteFilter.setAttribute(
+    'aria-label',
+    t(favoritesFilterActive ? 'historyShowAllLabel' : 'historyFilterFavoritesLabel')
+  );
 }
 
 function loadHistoryEntry(entry) {
@@ -260,18 +282,21 @@ function deleteHistoryEntry(index) {
 }
 
 function renderHistory() {
-  const history = loadHistory();
+  const allHistory = loadHistory();
+  const indexed = allHistory.map((entry, index) => ({ entry, index }));
+  const visible = favoritesFilterActive ? indexed.filter((item) => item.entry.favorite) : indexed;
+
   els.historyList.innerHTML = '';
 
-  if (!history.length) {
+  if (!visible.length) {
     const empty = document.createElement('p');
     empty.className = 'history-empty';
-    empty.textContent = t('historyEmpty');
+    empty.textContent = t(favoritesFilterActive ? 'historyNoFavorites' : 'historyEmpty');
     els.historyList.appendChild(empty);
     return;
   }
 
-  history.forEach((entry, index) => {
+  visible.forEach(({ entry, index }) => {
     const row = document.createElement('div');
     row.className = 'history-row';
 
@@ -287,6 +312,17 @@ function renderHistory() {
     `;
     main.addEventListener('click', () => loadHistoryEntry(entry));
 
+    const fav = document.createElement('button');
+    fav.type = 'button';
+    fav.className = 'history-row__favorite';
+    fav.classList.toggle('is-active', !!entry.favorite);
+    fav.setAttribute('aria-label', t(entry.favorite ? 'historyUnfavoriteLabel' : 'historyFavoriteLabel'));
+    fav.textContent = entry.favorite ? '★' : '☆';
+    fav.addEventListener('click', (event) => {
+      event.stopPropagation();
+      toggleFavorite(index);
+    });
+
     const del = document.createElement('button');
     del.type = 'button';
     del.className = 'history-row__delete';
@@ -298,6 +334,7 @@ function renderHistory() {
     });
 
     row.appendChild(main);
+    row.appendChild(fav);
     row.appendChild(del);
     els.historyList.appendChild(row);
   });
@@ -351,6 +388,7 @@ function resetToDefaults() {
 
 function onLanguageChanged(lang) {
   populatePresets(els.presetSelect, lang);
+  setFavoritesFilter(favoritesFilterActive);
   renderHistory();
   compute({ recordHistory: false });
 }
@@ -395,6 +433,11 @@ function wireEvents() {
   els.btnCopy.addEventListener('click', copyResults);
   els.btnClearHistory.addEventListener('click', () => {
     saveHistory([]);
+    renderHistory();
+  });
+
+  els.btnFavoriteFilter.addEventListener('click', () => {
+    setFavoritesFilter(!favoritesFilterActive);
     renderHistory();
   });
 

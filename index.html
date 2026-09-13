@@ -135,7 +135,10 @@
   <section class="card card--history" aria-labelledby="historyTitle">
     <div class="history-header">
       <h2 id="historyTitle" data-i18n="historyTitle">Historique</h2>
-      <button type="button" id="btnClearHistory" class="btn btn--link" data-i18n="historyClear">Effacer l'historique</button>
+      <div class="history-header__actions">
+        <button type="button" id="btnFavoriteFilter" class="history-filter-star" aria-pressed="false">☆</button>
+        <button type="button" id="btnClearHistory" class="btn btn--link" data-i18n="historyClear">Effacer l'historique</button>
+      </div>
     </div>
     <div id="historyList" class="history-list"></div>
   </section>

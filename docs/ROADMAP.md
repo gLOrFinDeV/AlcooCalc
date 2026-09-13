@@ -54,6 +54,9 @@ tags: [roadmap]
 - ✅ **Historique cliquable** : cliquer sur une entrée recharge tous ses paramètres (V₀/V₁, C₀, C₁,
   sucre, k) dans les champs ; bouton "×" dédié pour supprimer une entrée individuellement, en plus
   d'"Effacer l'historique" pour tout vider. Voir [`js/app.js`](../js/app.js).
+- ✅ **Favoris dans l'historique** : étoile par entrée (☆ vide → ★ pleine au clic, style vert du
+  thème) + étoile dans l'en-tête pour filtrer l'historique sur les favoris uniquement. Persisté
+  dans `localStorage` (champ `favorite` sur chaque entrée). Voir [`js/app.js`](../js/app.js).
 
 ## 🔮 v2 — Pistes UX (validées par l'utilisateur le 2026-09-07)
 - ✅ **Résultat "collant" sur mobile** : implémenté, voir "v2 — En cours" ci-dessus.

@@ -447,6 +447,30 @@ input[type='range']::-moz-range-thumb {
   margin-bottom: 0;
 }
 
+.history-header__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.history-filter-star {
+  background: transparent;
+  border: none;
+  color: var(--terminal-green);
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 0.1rem 0.2rem;
+  cursor: pointer;
+}
+
+.history-filter-star:hover {
+  color: var(--terminal-dim);
+}
+
+.history-filter-star.is-active {
+  text-shadow: 0 0 6px rgba(0, 204, 82, 0.6);
+}
+
 .history-list {
   margin-top: 0.6rem;
   display: flex;
@@ -537,6 +561,25 @@ input[type='range']::-moz-range-thumb {
 .history-row__delete:hover {
   color: var(--error-color);
   background: rgba(255, 59, 48, 0.08);
+}
+
+.history-row__favorite {
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  color: var(--terminal-green);
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0 0.6rem;
+  cursor: pointer;
+}
+
+.history-row__favorite:hover {
+  color: var(--terminal-dim);
+}
+
+.history-row__favorite.is-active {
+  text-shadow: 0 0 6px rgba(0, 204, 82, 0.6);
 }
 
 .history-row__date {

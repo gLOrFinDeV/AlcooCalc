@@ -40,6 +40,24 @@ tags: [journal]
   fond sombre. Implémenté via les pseudo-éléments `::-webkit-scrollbar-*` (Chromium/WebKit) avec un
   repli `scrollbar-width: thin; scrollbar-color: ...` pour Firefox (pas de contrôle des flèches
   sur ce moteur). Cache PWA bumpé à `alcoocalc-v22`.
+- Fait : ajout de **favoris sur l'historique**, à la demande de l'utilisateur (fonctionnalité non
+  prévue dans la roadmap v2 initiale). Chaque entrée de `#historyList` reçoit un troisième bouton
+  `.history-row__favorite` (entre "recharger" et "supprimer") : étoile vide `☆` par défaut, pleine
+  `★` verte au clic (`toggleFavorite(index)`, avec `event.stopPropagation()` pour ne pas déclencher
+  le rechargement). Le champ `favorite` (bool) est ajouté à chaque entrée dans `pushHistory()` et
+  persiste dans `localStorage` comme le reste de l'historique. Une étoile identique dans l'en-tête
+  (`#btnFavoriteFilter`) bascule un filtre en mémoire (`favoritesFilterActive`, non persisté) qui
+  restreint `renderHistory()` aux entrées favorites ; l'indexation utilisée pour supprimer/basculer
+  une entrée est calculée sur le tableau *non filtré* (`allHistory.map((entry, index) => ...)`)
+  pour rester correcte même quand la liste affichée est un sous-ensemble. Message dédié
+  "Aucun favori pour le moment." quand le filtre est actif et vide. i18n FR/EN ajoutée
+  (`historyFavoriteLabel`, `historyUnfavoriteLabel`, `historyFilterFavoritesLabel`,
+  `historyShowAllLabel`, `historyNoFavorites`). Cache PWA bumpé à `alcoocalc-v23`.
+- Testé dans le navigateur (FR et EN) : clic sur une étoile de ligne bascule vide/pleine sans
+  déclencher le rechargement ; clic sur l'étoile d'en-tête filtre correctement et se traduit par un
+  halo sur l'étoile active ; favori conservé après rechargement complet de la page (persistance
+  `localStorage` confirmée) ; le filtre repart désactivé par défaut à chaque chargement (non
+  persisté, comportement voulu).
 
 ## 2026-09-13 (suite)
 - Fait : renommage esthétique de deux libellés, à la demande de l'utilisateur (capture d'écran du
