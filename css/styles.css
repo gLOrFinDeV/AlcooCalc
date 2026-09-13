@@ -454,6 +454,44 @@ input[type='range']::-moz-range-thumb {
   gap: 0.5rem;
   max-height: 260px;
   overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--terminal-green) var(--bg-primary);
+}
+
+/* Ascenseur "terminal" (Chromium/WebKit) : piste sombre, poignée verte fine,
+   flèches vertes en triangle en haut/bas. Firefox se contente de la version
+   simplifiée via scrollbar-color ci-dessus (pas de contrôle des flèches). */
+.history-list::-webkit-scrollbar {
+  width: 10px;
+}
+
+.history-list::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+.history-list::-webkit-scrollbar-thumb {
+  background: var(--terminal-green);
+  border-radius: 3px;
+}
+
+.history-list::-webkit-scrollbar-thumb:hover {
+  background: var(--terminal-dim);
+}
+
+.history-list::-webkit-scrollbar-button {
+  display: block;
+  height: 12px;
+  background-color: var(--bg-primary);
+}
+
+.history-list::-webkit-scrollbar-button:vertical:start:decrement {
+  background-color: var(--terminal-green);
+  clip-path: polygon(50% 25%, 20% 75%, 80% 75%);
+}
+
+.history-list::-webkit-scrollbar-button:vertical:end:increment {
+  background-color: var(--terminal-green);
+  clip-path: polygon(50% 75%, 20% 25%, 80% 25%);
 }
 
 .history-row {

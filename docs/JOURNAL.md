@@ -34,6 +34,12 @@ tags: [journal]
   cible" est actif) garde `toFixed(3)`, car c'est une valeur d'entrée réinjectée dans le calcul,
   pas un résultat affiché. Les étapes de formule détaillée (`js/formulas.js`) ne sont pas touchées
   (contexte volontairement plus précis). Cache PWA bumpé à `alcoocalc-v21`.
+- Fait : ascenseur de `.history-list` (visible dès 4 entrées) restylé aux couleurs du thème
+  terminal, à la demande de l'utilisateur (capture d'écran de l'ascenseur gris par défaut) : piste
+  sombre (`--bg-primary`), poignée verte fine, flèches haut/bas en triangle vert (`clip-path`) sur
+  fond sombre. Implémenté via les pseudo-éléments `::-webkit-scrollbar-*` (Chromium/WebKit) avec un
+  repli `scrollbar-width: thin; scrollbar-color: ...` pour Firefox (pas de contrôle des flèches
+  sur ce moteur). Cache PWA bumpé à `alcoocalc-v22`.
 
 ## 2026-09-13 (suite)
 - Fait : renommage esthétique de deux libellés, à la demande de l'utilisateur (capture d'écran du
