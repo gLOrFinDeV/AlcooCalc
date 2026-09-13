@@ -165,7 +165,7 @@ function showErrors(errorKeys) {
 }
 
 function formatLiters(value) {
-  return `${value.toFixed(3)} ${t('unitL')} (${(value * 1000).toFixed(0)} mL)`;
+  return `${value.toFixed(2)} ${t('unitL')} (${(value * 1000).toFixed(0)} mL)`;
 }
 
 function renderResults(results) {
@@ -182,9 +182,9 @@ function renderResults(results) {
   showErrors(null);
   els.resultWater.textContent = formatLiters(results.Ve);
   els.resultSugar.textContent = `${results.ms.toFixed(1)} g`;
-  els.resultFinalVolume.textContent = `${results.Vf.toFixed(3)} ${t('unitL')}`;
+  els.resultFinalVolume.textContent = `${results.Vf.toFixed(2)} ${t('unitL')}`;
   els.resultExpansion.textContent = `${(results.expansion * 1000).toFixed(1)} mL`;
-  els.stickyWaterValue.textContent = `${results.Ve.toFixed(3)} ${t('unitL')}`;
+  els.stickyWaterValue.textContent = `${results.Ve.toFixed(2)} ${t('unitL')}`;
   els.stickySugarValue.textContent = `${results.ms.toFixed(1)} g`;
 }
 
@@ -282,8 +282,8 @@ function renderHistory() {
     main.setAttribute('aria-label', t('historyReloadLabel'));
     main.innerHTML = `
       <span class="history-row__date">${d.toLocaleString()}</span>
-      <span class="history-row__spec">${entry.v0}${t('unitL')} · ${entry.c0}${t('unitPercent')} → ${entry.cf}${t('unitPercent')}</span>
-      <span class="history-row__result">${t('resultWater')}: ${entry.ve.toFixed(3)}${t('unitL')} · ${t('resultSugar')}: ${entry.ms.toFixed(1)}g</span>
+      <span class="history-row__spec">${entry.v0.toFixed(2)}${t('unitL')} · ${entry.c0}${t('unitPercent')} → ${entry.cf}${t('unitPercent')}</span>
+      <span class="history-row__result">${t('resultWater')}: ${entry.ve.toFixed(2)}${t('unitL')} · ${t('resultSugar')}: ${entry.ms.toFixed(1)}g</span>
     `;
     main.addEventListener('click', () => loadHistoryEntry(entry));
 
@@ -314,7 +314,7 @@ function copyResults() {
     .replace('{sconc}', input.sconc)
     .replace('{ve}', formatLiters(lastResults.Ve))
     .replace('{ms}', lastResults.ms.toFixed(1))
-    .replace('{vf}', lastResults.Vf.toFixed(3))
+    .replace('{vf}', lastResults.Vf.toFixed(2))
     .replace('{exp}', (lastResults.expansion * 1000).toFixed(1));
 
   const feedback = () => {

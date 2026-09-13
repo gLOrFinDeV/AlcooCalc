@@ -25,6 +25,15 @@ tags: [journal]
   liste se met à jour correctement ; "Effacer l'historique" continue de tout vider.
 - Fait : retrait de la bordure `border-left` (ligne verticale) sur `.history-row__delete`, signalée
   inesthétique par l'utilisateur (capture d'écran). Cache PWA bumpé à `alcoocalc-v20`.
+- Fait : arrondi systématique à 2 décimales de tous les résultats affichés en litres (au lieu de 3,
+  et d'un cas non arrondi du tout). Corrige un bug signalé par l'utilisateur (capture d'écran) où
+  une ligne d'historique affichait `0.71076923076923...L` — `entry.v0` y était interpolé sans
+  `toFixed`. Modifié : `formatLiters()`, `resultFinalVolume`, `stickyWaterValue`,
+  `history-row__spec` (V₀), `history-row__result` (eau), et le template `copyResults()` — tous en
+  `toFixed(2)`. Le champ V₀ recalculé (affiché dans le champ de saisie lui-même quand "Volume
+  cible" est actif) garde `toFixed(3)`, car c'est une valeur d'entrée réinjectée dans le calcul,
+  pas un résultat affiché. Les étapes de formule détaillée (`js/formulas.js`) ne sont pas touchées
+  (contexte volontairement plus précis). Cache PWA bumpé à `alcoocalc-v21`.
 
 ## 2026-09-13 (suite)
 - Fait : renommage esthétique de deux libellés, à la demande de l'utilisateur (capture d'écran du
