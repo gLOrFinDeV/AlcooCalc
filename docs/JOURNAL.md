@@ -23,6 +23,8 @@ tags: [journal]
 - Testé dans le navigateur (FR et EN) : clic sur une entrée recharge exactement les bons résultats
   sans dupliquer l'historique ; clic sur "×" supprime uniquement l'entrée visée, le reste de la
   liste se met à jour correctement ; "Effacer l'historique" continue de tout vider.
+- Fait : retrait de la bordure `border-left` (ligne verticale) sur `.history-row__delete`, signalée
+  inesthétique par l'utilisateur (capture d'écran). Cache PWA bumpé à `alcoocalc-v20`.
 
 ## 2026-09-13 (suite)
 - Fait : renommage esthétique de deux libellés, à la demande de l'utilisateur (capture d'écran du

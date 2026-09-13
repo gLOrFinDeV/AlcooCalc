@@ -488,7 +488,6 @@ input[type='range']::-moz-range-thumb {
   flex-shrink: 0;
   background: transparent;
   border: none;
-  border-left: 1px dashed var(--border-color);
   color: var(--terminal-dim);
   font-family: var(--font-mono);
   font-size: 1.1rem;
