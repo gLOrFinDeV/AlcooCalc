@@ -8,6 +8,13 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-09-13 (suite 6)
+- Fait : dans la section "Résultats", renommage du libellé "Volume final" en "Volume cible"
+  (`resultFinalVolume` dans `js/translations.js`, FR et EN), pour la même raison de cohérence que
+  le renommage précédent (V₁ = "volume cible"). Cache PWA bumpé à `alcoocalc-v26`.
+- Testé dans le navigateur (FR et EN, cache et service worker vidés) : le résultat affiche bien
+  "Volume cible" / "Target volume".
+
 ## 2026-09-13 (suite 5)
 - Fait : dans la formule détaillée (LaTeX), renommage de la variable `V_f` en `V_1` (formule
   principale et les 4 étapes substituées) pour rester cohérent avec le renommage UI décidé plus tôt
