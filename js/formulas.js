@@ -50,7 +50,7 @@ function generateFormulaSteps(V0, C0, Cf, S_conc, k, results) {
   const fmt = (n, d = 3) => Number(n).toFixed(d);
   return [
     {
-      tex: 'V_f = \\dfrac{V_0 \\cdot C_0}{C_f}',
+      tex: 'V_f = \\dfrac{V_0 \\cdot C_0}{C_1}',
       substituted: `V_f = \\dfrac{${fmt(V0)} \\times ${fmt(C0, 1)}}{${fmt(Cf, 1)}} = ${fmt(results.Vf)}\\ \\text{L}`,
     },
     {
@@ -72,7 +72,7 @@ function renderFormula(containerEl, stepsContainerEl, V0, C0, Cf, S_conc, k, res
   if (typeof katex === 'undefined') return;
 
   const mainFormula =
-    '\\begin{aligned} V_f &= \\dfrac{V_0 \\cdot C_0}{C_f} \\\\ m_s &= S_{conc} \\cdot V_f \\\\ \\Delta V_{sucre} &= k \\cdot m_s \\\\ V_e &= V_f - V_0 - \\Delta V_{sucre} \\end{aligned}';
+    '\\begin{aligned} V_f &= \\dfrac{V_0 \\cdot C_0}{C_1} \\\\ m_s &= S_{conc} \\cdot V_f \\\\ \\Delta V_{sucre} &= k \\cdot m_s \\\\ V_e &= V_f - V_0 - \\Delta V_{sucre} \\end{aligned}';
 
   katex.render(mainFormula, containerEl, { throwOnError: false, displayMode: true });
 

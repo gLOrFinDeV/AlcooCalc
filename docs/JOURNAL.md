@@ -8,6 +8,19 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-09-13 (suite)
+- Fait : renommage esthétique de deux libellés, à la demande de l'utilisateur (capture d'écran du
+  champ "Volume final"). Clarifié via question : la nouvelle variable du champ volume est bien
+  **V1** (et non C1, qui désignerait une concentration) pour rester cohérente avec V₀ déjà utilisé.
+  - Champ "Volume final" (celui qui remplace V₀) renommé en **"Volume cible (V1)"** — ça lève au
+    passage une ambiguïté qui existait avec la ligne de résultat "Volume final" (Vf, le résultat
+    calculé), désormais clairement distincte du volume *souhaité* en entrée.
+  - Libellé "Alcool cible (C_f)" renommé en **"Alcool cible (C1)"**, et la notation LaTeX
+    correspondante dans la formule détaillée (`js/formulas.js`) mise à jour de `C_f` à `C_1` pour
+    rester cohérente avec le nouveau libellé (les variables JS internes `Cf`/`cf` ne changent pas,
+    seul l'affichage change). i18n FR/EN mise à jour. Cache PWA bumpé à `alcoocalc-v17`.
+- Testé dans le navigateur : nouveaux libellés affichés, formule détaillée affiche bien C₁.
+
 ## 2026-09-13
 - Fait : création de la branche `v2` (poussée sur origin) pour développer les pistes UX v2 sans
   affecter `main`, qui est déployé automatiquement en production via GitHub Pages. Tout le travail
