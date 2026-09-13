@@ -1,7 +1,7 @@
 :root {
   --bg-primary: #000000;
   --bg-secondary: #0a0f0a;
-  --terminal-green: #00ff41;
+  --terminal-green: #00993d;
   --terminal-dim: #008f11;
   --text-primary: #e0ffe0;
   --border-color: #003b00;
@@ -66,8 +66,8 @@ body.app-ready .app-content {
   z-index: 1000;
   background: repeating-linear-gradient(
     to bottom,
-    rgba(0, 255, 65, 0.03),
-    rgba(0, 255, 65, 0.03) 1px,
+    rgba(0, 153, 61, 0.03),
+    rgba(0, 153, 61, 0.03) 1px,
     transparent 1px,
     transparent 3px
   );
@@ -91,7 +91,7 @@ body.app-ready .app-content {
   font-size: clamp(1.6rem, 6vw, 2.4rem);
   margin: 0.5rem 0 0;
   color: var(--terminal-green);
-  text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+  text-shadow: 0 0 10px rgba(0, 153, 61, 0.5);
   letter-spacing: 0.05em;
 }
 
@@ -100,7 +100,7 @@ body.app-ready .app-content {
   width: 0.55em;
   height: 1.4rem;
   background: var(--terminal-green);
-  box-shadow: 0 0 8px rgba(0, 255, 65, 0.6);
+  box-shadow: 0 0 8px rgba(0, 153, 61, 0.6);
   animation: blink 1s steps(1) infinite;
 }
 
@@ -135,7 +135,7 @@ body.app-ready .app-content {
 .lang-btn:focus-visible {
   border-color: var(--terminal-green);
   color: var(--terminal-green);
-  box-shadow: 0 0 8px rgba(0, 255, 65, 0.3);
+  box-shadow: 0 0 8px rgba(0, 153, 61, 0.3);
   outline: none;
 }
 
@@ -230,7 +230,7 @@ input[type='range']:focus-visible,
 button:focus-visible {
   outline: none;
   border-color: var(--terminal-green);
-  box-shadow: 0 0 8px rgba(0, 255, 65, 0.3);
+  box-shadow: 0 0 8px rgba(0, 153, 61, 0.3);
 }
 
 .field {
@@ -279,7 +279,7 @@ input[type='range']::-webkit-slider-thumb {
   height: 16px;
   border-radius: 50%;
   background: var(--terminal-green);
-  box-shadow: 0 0 6px rgba(0, 255, 65, 0.6);
+  box-shadow: 0 0 6px rgba(0, 153, 61, 0.6);
   cursor: pointer;
 }
 
@@ -289,7 +289,7 @@ input[type='range']::-moz-range-thumb {
   border: none;
   border-radius: 50%;
   background: var(--terminal-green);
-  box-shadow: 0 0 6px rgba(0, 255, 65, 0.6);
+  box-shadow: 0 0 6px rgba(0, 153, 61, 0.6);
   cursor: pointer;
 }
 
@@ -343,7 +343,7 @@ input[type='range']::-moz-range-thumb {
   color: var(--terminal-green);
   font-size: 1.05rem;
   font-weight: bold;
-  text-shadow: 0 0 8px rgba(0, 255, 65, 0.35);
+  text-shadow: 0 0 8px rgba(0, 153, 61, 0.35);
   text-align: right;
 }
 

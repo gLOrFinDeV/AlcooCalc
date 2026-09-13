@@ -40,6 +40,13 @@ tags: [roadmap]
   durée) — suffisant ou faut-il purger après un certain temps ?
 - Faut-il des icônes PWA soignées (actuellement des placeholders générés "AC" sur fond noir/vert) ?
 
+## 🚧 v2 — En cours (branche `v2`)
+- Développement v2 fait sur la branche git `v2` (créée le 2026-09-13), pour ne pas déployer de
+  travail en cours sur `main`/GitHub Pages. Merge dans `main` prévu une fois les fonctionnalités
+  ci-dessous testées et prêtes.
+- ✅ **Vert principal assombri** : `--terminal-green` passe de `#00FF41` à `#00993D` (vert phosphore
+  plus sombre, moins fatigant pour les yeux), choisi par l'utilisateur parmi 4 nuances comparées.
+
 ## 🔮 v2 — Pistes UX (validées par l'utilisateur le 2026-09-07)
 - **Résultat "collant" sur mobile** : un résumé compact (eau/sucre) reste visible en bas d'écran
   pendant qu'on ajuste les sliders, pour éviter l'aller-retour de scroll entre paramètres et résultats.

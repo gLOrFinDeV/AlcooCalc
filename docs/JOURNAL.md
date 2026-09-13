@@ -1,12 +1,28 @@
 ---
 title: Journal du projet
 status: actif
-last-reviewed: 2026-09-10
+last-reviewed: 2026-09-13
 sources: []
 tags: [journal]
 ---
 
 # Journal — AlcooCalc
+
+## 2026-09-13
+- Fait : création de la branche `v2` (poussée sur origin) pour développer les pistes UX v2 sans
+  affecter `main`, qui est déployé automatiquement en production via GitHub Pages. Tout le travail
+  v2 se fait désormais sur cette branche jusqu'à merge explicite.
+- Fait : changement de la couleur verte principale du thème terminal, jugée trop vive/fatigante à
+  l'usage (`--terminal-green` passe de `#00FF41` à `#00993D`, un vert phosphore plus sombre et plus
+  posé). Choix fait par l'utilisateur après comparaison de 4 nuances sur une palette visuelle
+  (artifact) : original, `#00CC52`, `#00993D` (retenu), `#1FAD58`.
+- Implémentation : variable CSS `--terminal-green` mise à jour ; toutes les valeurs `rgba(0, 255,
+  65, …)` codées en dur (halos/ombres) remplacées par le RGB équivalent (`0, 153, 61`) dans
+  `css/styles.css` ; couleur de la traînée de pluie Matrix dans `js/splash.js` alignée sur la même
+  teinte ; `theme_color` de `manifest.json` mis à jour pour cohérence PWA. `--terminal-dim` non
+  modifié. Cache PWA bumpé à `alcoocalc-v12`.
+- Testé dans le navigateur : nouvelle teinte bien appliquée (titres, bordures, sliders, halos,
+  résultats), lisibilité conservée.
 
 ## 2026-09-10
 - Fait : transfert complet du dépôt GitHub du compte `RobJBee` vers le nouveau compte

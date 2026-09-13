@@ -189,7 +189,7 @@
       // tête de la traînée plus claire, effet de lueur
       ctx.fillStyle = '#c8ffd8';
       ctx.fillText(char, i * FONT_SIZE, y);
-      ctx.fillStyle = '#00ff41';
+      ctx.fillStyle = '#00993d';
       ctx.fillText(char, i * FONT_SIZE, y - FONT_SIZE);
 
       if (y > canvas.height && Math.random() > 0.975) {
