@@ -20,6 +20,10 @@ tags: [journal]
     rester cohérente avec le nouveau libellé (les variables JS internes `Cf`/`cf` ne changent pas,
     seul l'affichage change). i18n FR/EN mise à jour. Cache PWA bumpé à `alcoocalc-v17`.
 - Testé dans le navigateur : nouveaux libellés affichés, formule détaillée affiche bien C₁.
+- Fait : le "1" de V1/C1 mis en indice (caractère unicode `₁`, comme `₀` pour V₀/C₀ déjà en place)
+  à la demande de l'utilisateur, pour un style cohérent — **"Volume cible (V₁)"** et
+  **"Alcool cible (C₁)"**. La notation LaTeX de la formule détaillée (`C_1`) n'a pas besoin de
+  changement, elle affichait déjà l'indice via KaTeX. Cache PWA bumpé à `alcoocalc-v18`.
 
 ## 2026-09-13
 - Fait : création de la branche `v2` (poussée sur origin) pour développer les pistes UX v2 sans
