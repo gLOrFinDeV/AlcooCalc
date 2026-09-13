@@ -23,6 +23,10 @@ tags: [journal]
   modifié. Cache PWA bumpé à `alcoocalc-v12`.
 - Testé dans le navigateur : nouvelle teinte bien appliquée (titres, bordures, sliders, halos,
   résultats), lisibilité conservée.
+- Retour utilisateur après vérification en navigateur : `#00993D` manque de contraste. Changement
+  pour la proposition 1 : `--terminal-green` passe à **`#00CC52`** (rgb 0, 204, 82). Même
+  traitement appliqué (halos CSS, traînée du splash, `theme_color` du manifest). Cache PWA bumpé à
+  `alcoocalc-v13`.
 
 ## 2026-09-10
 - Fait : transfert complet du dépôt GitHub du compte `RobJBee` vers le nouveau compte
