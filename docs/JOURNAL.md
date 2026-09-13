@@ -8,6 +8,17 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-09-13 (suite 5)
+- Fait : dans la formule détaillée (LaTeX), renommage de la variable `V_f` en `V_1` (formule
+  principale et les 4 étapes substituées) pour rester cohérent avec le renommage UI décidé plus tôt
+  ("Volume final" → "Volume cible (V₁)") — la variable calculée `V_f` correspond au même concept que
+  le paramètre `V₁` déjà affiché ailleurs dans l'app. Les noms internes JS (`Vf`, `results.Vf`) ne
+  sont pas touchés, seul l'affichage KaTeX change. Simplification demandée dans la foulée :
+  `S_{conc}` devient simplement `S` dans la formule, cohérent avec le libellé "Sucre visé (S)".
+  Cache PWA bumpé à `alcoocalc-v25`.
+- Testé dans le navigateur (cache et service worker vidés) : la formule principale et les étapes du
+  calcul affichent bien `V_1 = (V_0 · C_0) / C_1`, `m_s = S · V_1`, etc.
+
 ## 2026-09-13 (suite 4)
 - Fait : correction de deux régressions de traduction signalées par l'utilisateur. (1) Le message
   "Copié !" après "Copy results" en anglais : le code était déjà correct (`copiedMsg` traduit dans

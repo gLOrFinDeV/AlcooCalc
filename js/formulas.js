@@ -51,11 +51,11 @@ function generateFormulaSteps(V0, C0, Cf, S_conc, k, results, lang) {
   const dV = lang === 'en' ? '\\Delta V_{sugar}' : '\\Delta V_{sucre}';
   return [
     {
-      tex: 'V_f = \\dfrac{V_0 \\cdot C_0}{C_1}',
-      substituted: `V_f = \\dfrac{${fmt(V0)} \\times ${fmt(C0, 1)}}{${fmt(Cf, 1)}} = ${fmt(results.Vf)}\\ \\text{L}`,
+      tex: 'V_1 = \\dfrac{V_0 \\cdot C_0}{C_1}',
+      substituted: `V_1 = \\dfrac{${fmt(V0)} \\times ${fmt(C0, 1)}}{${fmt(Cf, 1)}} = ${fmt(results.Vf)}\\ \\text{L}`,
     },
     {
-      tex: 'm_s = S_{conc} \\cdot V_f',
+      tex: 'm_s = S \\cdot V_1',
       substituted: `m_s = ${fmt(S_conc, 1)} \\times ${fmt(results.Vf)} = ${fmt(results.ms, 1)}\\ \\text{g}`,
     },
     {
@@ -63,7 +63,7 @@ function generateFormulaSteps(V0, C0, Cf, S_conc, k, results, lang) {
       substituted: `${dV} = ${fmt(k, 5)} \\times ${fmt(results.ms, 1)} = ${fmt(results.expansion)}\\ \\text{L} = ${fmt(results.expansion * 1000, 1)}\\ \\text{mL}`,
     },
     {
-      tex: `V_e = V_f - V_0 - ${dV}`,
+      tex: `V_e = V_1 - V_0 - ${dV}`,
       substituted: `V_e = ${fmt(results.Vf)} - ${fmt(V0)} - ${fmt(results.expansion)} = ${fmt(results.Ve)}\\ \\text{L}`,
     },
   ];
@@ -73,7 +73,7 @@ function renderFormula(containerEl, stepsContainerEl, V0, C0, Cf, S_conc, k, res
   if (typeof katex === 'undefined') return;
 
   const dV = lang === 'en' ? '\\Delta V_{sugar}' : '\\Delta V_{sucre}';
-  const mainFormula = `\\begin{aligned} V_f &= \\dfrac{V_0 \\cdot C_0}{C_1} \\\\ m_s &= S_{conc} \\cdot V_f \\\\ ${dV} &= k \\cdot m_s \\\\ V_e &= V_f - V_0 - ${dV} \\end{aligned}`;
+  const mainFormula = `\\begin{aligned} V_1 &= \\dfrac{V_0 \\cdot C_0}{C_1} \\\\ m_s &= S \\cdot V_1 \\\\ ${dV} &= k \\cdot m_s \\\\ V_e &= V_1 - V_0 - ${dV} \\end{aligned}`;
 
   katex.render(mainFormula, containerEl, { throwOnError: false, displayMode: true });
 
