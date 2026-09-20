@@ -46,9 +46,9 @@ function calculateDilution(V0, C0, Cf, S_conc, k) {
   return { feasible: true, errors: [], Vf, ms, expansion, Ve };
 }
 
-function generateFormulaSteps(V0, C0, Cf, S_conc, k, results, lang) {
+function generateFormulaSteps(V0, C0, Cf, S_conc, k, results) {
   const fmt = (n, d = 3) => Number(n).toFixed(d);
-  const dV = lang === 'en' ? '\\Delta V_{sugar}' : '\\Delta V_{sucre}';
+  const dV = '\\Delta V_s';
   return [
     {
       tex: 'V_1 = \\dfrac{V_0 \\cdot C_0}{C_1}',
@@ -69,10 +69,10 @@ function generateFormulaSteps(V0, C0, Cf, S_conc, k, results, lang) {
   ];
 }
 
-function renderFormula(containerEl, stepsContainerEl, V0, C0, Cf, S_conc, k, results, lang) {
+function renderFormula(containerEl, stepsContainerEl, V0, C0, Cf, S_conc, k, results) {
   if (typeof katex === 'undefined') return;
 
-  const dV = lang === 'en' ? '\\Delta V_{sugar}' : '\\Delta V_{sucre}';
+  const dV = '\\Delta V_s';
   const mainFormula = `\\begin{aligned} V_1 &= \\dfrac{V_0 \\cdot C_0}{C_1} \\\\ m_s &= S \\cdot V_1 \\\\ ${dV} &= k \\cdot m_s \\\\ V_e &= V_1 - V_0 - ${dV} \\end{aligned}`;
 
   katex.render(mainFormula, containerEl, { throwOnError: false, displayMode: true });
@@ -80,7 +80,7 @@ function renderFormula(containerEl, stepsContainerEl, V0, C0, Cf, S_conc, k, res
   stepsContainerEl.innerHTML = '';
   if (!results.feasible && !Number.isFinite(results.Vf)) return;
 
-  const steps = generateFormulaSteps(V0, C0, Cf, S_conc, k, results, lang);
+  const steps = generateFormulaSteps(V0, C0, Cf, S_conc, k, results);
   steps.forEach((step, i) => {
     const line = document.createElement('div');
     line.className = 'formula-step';

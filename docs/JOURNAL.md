@@ -8,6 +8,17 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-09-20
+- Fait : simplification de la variable `ΔV_{sucre}`/`ΔV_{sugar}` en `ΔV_s` dans la formule
+  détaillée et ses 4 étapes de calcul, identique en français et en anglais (demande explicite de
+  l'utilisateur). Comme la notation ne dépend plus de la langue, le paramètre `lang` devenu inutile
+  a été retiré de `generateFormulaSteps()` et `renderFormula()` (`js/formulas.js`), et l'appel dans
+  `js/app.js` simplifié en conséquence. Cache PWA bumpé à `alcoocalc-v27`.
+- Testé dans le navigateur (FR et EN, cache et service worker vidés) : la formule principale et les
+  4 étapes affichent bien `ΔV_s` dans les deux langues.
+- Note technique : `.claude/launch.json` (config locale du serveur de dev `scripts/serve.ps1`,
+  non versionnée) avait disparu de la machine — recréée pour retrouver l'aperçu navigateur.
+
 ## 2026-09-13 (suite 6)
 - Fait : dans la section "Résultats", renommage du libellé "Volume final" en "Volume cible"
   (`resultFinalVolume` dans `js/translations.js`, FR et EN), pour la même raison de cohérence que
