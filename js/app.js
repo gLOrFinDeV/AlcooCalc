@@ -171,7 +171,7 @@ function formatLiters(value) {
 }
 
 function formatMass(valueGrams) {
-  return `${(valueGrams / 1000).toFixed(3)} kg (${valueGrams.toFixed(1)} g)`;
+  return `${(valueGrams / 1000).toFixed(2)} kg (${valueGrams.toFixed(0)} g)`;
 }
 
 function renderResults(results) {

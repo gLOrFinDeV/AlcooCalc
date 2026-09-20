@@ -8,6 +8,11 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-09-20 (suite 3)
+- Fait : arrondi de `formatMass()` (`js/app.js`) ajusté — kg à 2 décimales (au lieu de 3), g à
+  l'entier (au lieu d'1 décimale), sur demande de l'utilisateur. Cache PWA bumpé à `alcoocalc-v31`.
+- Testé dans le navigateur : "Sucre à ajouter (mₛ)" affiche bien "0.25 kg (250 g)".
+
 ## 2026-09-20 (suite 2)
 - Fait : dans la section "Résultats", affichage systématique de chaque valeur dans son unité
   principale accompagnée de l'unité secondaire entre parenthèses — L (mL) pour les volumes, kg (g)
