@@ -170,6 +170,10 @@ function formatLiters(value) {
   return `${value.toFixed(2)} ${t('unitL')} (${(value * 1000).toFixed(0)} mL)`;
 }
 
+function formatMass(valueGrams) {
+  return `${(valueGrams / 1000).toFixed(3)} kg (${valueGrams.toFixed(1)} g)`;
+}
+
 function renderResults(results) {
   if (!results.feasible) {
     els.resultWater.textContent = '—';
@@ -183,9 +187,9 @@ function renderResults(results) {
   }
   showErrors(null);
   els.resultWater.textContent = formatLiters(results.Ve);
-  els.resultSugar.textContent = `${results.ms.toFixed(1)} g`;
-  els.resultFinalVolume.textContent = `${results.Vf.toFixed(2)} ${t('unitL')}`;
-  els.resultExpansion.textContent = `${(results.expansion * 1000).toFixed(1)} mL`;
+  els.resultSugar.textContent = formatMass(results.ms);
+  els.resultFinalVolume.textContent = formatLiters(results.Vf);
+  els.resultExpansion.textContent = formatLiters(results.expansion);
   els.stickyWaterValue.textContent = `${results.Ve.toFixed(2)} ${t('unitL')}`;
   els.stickySugarValue.textContent = `${results.ms.toFixed(1)} g`;
 }

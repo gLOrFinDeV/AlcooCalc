@@ -8,6 +8,17 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-09-20 (suite 2)
+- Fait : dans la section "Résultats", affichage systématique de chaque valeur dans son unité
+  principale accompagnée de l'unité secondaire entre parenthèses — L (mL) pour les volumes, kg (g)
+  pour la masse de sucre. Nouvelle fonction `formatMass()` dans `js/app.js` (miroir de
+  `formatLiters()` déjà existante) ; `resultSugar` utilise désormais `formatMass(results.ms)`,
+  `resultFinalVolume` et `resultExpansion` utilisent `formatLiters()` au lieu d'un simple
+  `toFixed()`. Le résumé collant mobile et l'historique ne sont pas concernés (résumés
+  volontairement compacts). Cache PWA bumpé à `alcoocalc-v30`.
+- Testé dans le navigateur (FR et EN, cache et service worker vidés) : les 4 lignes de Résultats
+  affichent bien "0.51 L (509 mL)", "0.250 kg (250.0 g)", "1.67 L (1667 mL)", "0.16 L (158 mL)".
+
 ## 2026-09-20 (suite)
 - Fait : ajout du symbole mathématique associé entre parenthèses à côté de chaque libellé de la
   section "Résultats" (`resultWater`, `resultSugar`, `resultFinalVolume`, `resultExpansion` dans
