@@ -8,6 +8,18 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-09-20 (suite)
+- Fait : ajout du symbole mathématique associé entre parenthèses à côté de chaque libellé de la
+  section "Résultats" (`resultWater`, `resultSugar`, `resultFinalVolume`, `resultExpansion` dans
+  `js/translations.js`, FR et EN) — ex. "Eau à ajouter (Vₑ)", "Sucre à ajouter (mₛ)", "Volume cible
+  (V₁)", "Expansion due au sucre (ΔVₛ)". Notation en subscript Unicode, cohérente avec les libellés
+  des paramètres (V₀, C₀, etc.). Comme `resultWater`/`resultSugar` étaient aussi réutilisés dans le
+  résumé compact de chaque ligne d'historique, deux nouvelles clés dédiées `historyWaterLabel`/
+  `historySugarLabel` (sans le symbole, pour rester concis) ont été introduites et l'historique mis
+  à jour pour les utiliser à la place. Cache PWA bumpé à `alcoocalc-v29`.
+- Testé dans le navigateur (FR et EN, cache et service worker vidés, une entrée d'historique
+  créée) : la section Résultats affiche bien les 4 symboles ; l'historique reste compact sans eux.
+
 ## 2026-09-20
 - Fait : simplification de la variable `ΔV_{sucre}`/`ΔV_{sugar}` en `ΔV_s` dans la formule
   détaillée et ses 4 étapes de calcul, identique en français et en anglais (demande explicite de

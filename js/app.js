@@ -308,7 +308,7 @@ function renderHistory() {
     main.innerHTML = `
       <span class="history-row__date">${d.toLocaleString()}</span>
       <span class="history-row__spec">${entry.v0.toFixed(2)}${t('unitL')} · ${entry.c0}${t('unitPercent')} → ${entry.cf}${t('unitPercent')}</span>
-      <span class="history-row__result">${t('resultWater')}: ${entry.ve.toFixed(2)}${t('unitL')} · ${t('resultSugar')}: ${entry.ms.toFixed(1)}g</span>
+      <span class="history-row__result">${t('historyWaterLabel')}: ${entry.ve.toFixed(2)}${t('unitL')} · ${t('historySugarLabel')}: ${entry.ms.toFixed(1)}g</span>
     `;
     main.addEventListener('click', () => loadHistoryEntry(entry));
 
