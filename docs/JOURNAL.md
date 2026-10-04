@@ -8,6 +8,23 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-10-04 (suite 10)
+- Audit accessibilité mesuré dans le navigateur (contrastes, cibles tactiles, attributs ARIA,
+  clavier). Constats : aucun texte sous 4,5:1 (vert atténué 4,94:1) ; mais curseurs sans nom
+  accessible, aucune annonce des résultats, FR/EN sans `aria-pressed`, cibles tactiles < 44 px,
+  bordures de champs à 1,63:1 (cible 3:1), focus discret, curseur clignotant non stoppé par
+  `prefers-reduced-motion`, pas de lien d'évitement. Plan validé avec l'utilisateur : aide
+  contextuelle → annonce des résultats + erreurs visibles → petits points.
+- Fait (étape 1 — aide contextuelle) : bouton « ? » (`.help-btn`) au clic/tap sur Alcool de base,
+  Volume cible (V₁), Sucre visé (S) et Coefficient k ; il déplie un panneau `.help-text` en ligne
+  (`aria-expanded` / `aria-controls`, Échap referme). Textes validés par l'utilisateur, FR/EN
+  (`helpPreset/helpVf/helpS/helpK`). Le bouton prend le nom « Aide + libellé du champ »
+  (`aria-labelledby`, nouvel attribut `data-i18n-aria-label` géré par `applyTranslations`). Le
+  texte fixe sous V₁ (`vfTargetHint`) est remplacé par l'aide. Au passage : les 6 curseurs sont
+  nommés via `aria-labelledby` sur leur libellé. Cache PWA bumpé à `alcoocalc-v40`.
+- Testé dans le navigateur : ouverture/fermeture, Échap, noms accessibles, FR et EN.
+- Note : les repères « 150 / 300 g/L » du texte S sont indicatifs (validés par l'utilisateur).
+
 ## 2026-10-04 (suite 9)
 - Fait : section « Auteur » ajoutée au README (gLOrFinD, première version offerte à la communauté,
   contact `glorfind@pm.me`, mention des demandes d'usage commercial) ; la section Licence renvoie

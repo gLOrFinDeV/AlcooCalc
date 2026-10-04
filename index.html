@@ -36,65 +36,80 @@
 <main class="app-main">
 
   <section class="card card--presets" aria-labelledby="presetLabel">
-    <div id="presetLabel" class="card-title" data-i18n="presetLabel">Alcool de base</div>
+    <div class="card-title card-title--help">
+      <span id="presetLabel" data-i18n="presetLabel">Alcool de base</span>
+      <button type="button" id="helpBtnPreset" class="help-btn" aria-expanded="false" aria-controls="helpPreset" aria-labelledby="helpBtnPreset presetLabel" data-i18n-aria-label="helpBtnLabel">?</button>
+    </div>
     <div id="presetToggle" class="preset-toggle" role="group" aria-labelledby="presetLabel">
       <button type="button" class="preset-btn" data-preset="eaudevie" aria-pressed="false" data-i18n="preset_eaudevie">Eau-de-vie</button>
       <button type="button" class="preset-btn" data-preset="liqueur" aria-pressed="false" data-i18n="preset_liqueur">Liqueur</button>
     </div>
+    <p id="helpPreset" class="help-text" data-i18n="helpPreset" hidden>Eau-de-vie : on dilue simplement avec de l'eau. Liqueur : on dilue et on ajoute du sucre.</p>
   </section>
 
   <section class="card card--params" aria-labelledby="inputsTitle">
     <h2 id="inputsTitle" data-i18n="inputsTitle">Paramètres</h2>
 
     <div class="field" id="v0Field">
-      <label for="v0Number"><span data-i18n="labelV0">Volume initial (V₀)</span> <span class="unit" data-i18n="unitL">L</span></label>
+      <label id="lblV0" for="v0Number"><span data-i18n="labelV0">Volume initial (V₀)</span> <span class="unit" data-i18n="unitL">L</span></label>
       <div class="field__controls">
-        <input type="range" id="v0Range" min="0.1" max="10" step="0.05" value="1.0" />
+        <input type="range" id="v0Range" aria-labelledby="lblV0" min="0.1" max="10" step="0.05" value="1.0" />
         <input type="number" id="v0Number" min="0.1" max="10" step="0.05" value="1.0" inputmode="decimal" />
       </div>
     </div>
 
     <div class="field">
-      <label for="vfTargetNumber"><span data-i18n="labelVfTarget">Volume cible (V₁)</span> <span class="unit" data-i18n="unitL">L</span></label>
+      <div class="field__head">
+        <label id="lblVfTarget" for="vfTargetNumber"><span data-i18n="labelVfTarget">Volume cible (V₁)</span> <span class="unit" data-i18n="unitL">L</span></label>
+        <button type="button" id="helpBtnVf" class="help-btn" aria-expanded="false" aria-controls="helpVf" aria-labelledby="helpBtnVf lblVfTarget" data-i18n-aria-label="helpBtnLabel">?</button>
+      </div>
       <div class="field__controls">
-        <input type="range" id="vfTargetRange" min="0.1" max="10" step="0.05" value="1.0" />
+        <input type="range" id="vfTargetRange" aria-labelledby="lblVfTarget" min="0.1" max="10" step="0.05" value="1.0" />
         <input type="number" id="vfTargetNumber" min="0.1" max="10" step="0.05" inputmode="decimal" placeholder="—" />
       </div>
-      <p class="field__hint" data-i18n="vfTargetHint">Si renseigné, remplace V₀ : le volume initial nécessaire est calculé automatiquement.</p>
+      <p id="helpVf" class="help-text" data-i18n="helpVf" hidden>Volume final souhaité. S'il est rempli, l'app calcule le volume d'alcool de départ nécessaire.</p>
     </div>
 
     <div class="field">
-      <label for="c0Number"><span data-i18n="labelC0">Alcool initial (C₀)</span> <span class="unit" data-i18n="unitPercent">%</span></label>
+      <label id="lblC0" for="c0Number"><span data-i18n="labelC0">Alcool initial (C₀)</span> <span class="unit" data-i18n="unitPercent">%</span></label>
       <div class="field__controls">
-        <input type="range" id="c0Range" min="1" max="96" step="0.5" value="50" />
+        <input type="range" id="c0Range" aria-labelledby="lblC0" min="1" max="96" step="0.5" value="50" />
         <input type="number" id="c0Number" min="1" max="96" step="0.5" value="50" inputmode="decimal" />
       </div>
     </div>
 
     <div class="field">
-      <label for="cfNumber"><span data-i18n="labelCf">Alcool cible (C₁)</span> <span class="unit" data-i18n="unitPercent">%</span></label>
+      <label id="lblCf" for="cfNumber"><span data-i18n="labelCf">Alcool cible (C₁)</span> <span class="unit" data-i18n="unitPercent">%</span></label>
       <div class="field__controls">
-        <input type="range" id="cfRange" min="1" max="95" step="0.5" value="30" />
+        <input type="range" id="cfRange" aria-labelledby="lblCf" min="1" max="95" step="0.5" value="30" />
         <input type="number" id="cfNumber" min="1" max="95" step="0.5" value="30" inputmode="decimal" />
       </div>
     </div>
 
     <div class="field sugar-only">
-      <label for="sconcNumber"><span data-i18n="labelSconc">Sucre visé (S)</span> <span class="unit" data-i18n="unitGL">g/L</span></label>
+      <div class="field__head">
+        <label id="lblSconc" for="sconcNumber"><span data-i18n="labelSconc">Sucre visé (S)</span> <span class="unit" data-i18n="unitGL">g/L</span></label>
+        <button type="button" id="helpBtnS" class="help-btn" aria-expanded="false" aria-controls="helpS" aria-labelledby="helpBtnS lblSconc" data-i18n-aria-label="helpBtnLabel">?</button>
+      </div>
       <div class="field__controls">
-        <input type="range" id="sconcRange" min="0" max="500" step="5" value="150" />
+        <input type="range" id="sconcRange" aria-labelledby="lblSconc" min="0" max="500" step="5" value="150" />
         <input type="number" id="sconcNumber" min="0" max="500" step="5" value="150" inputmode="decimal" />
       </div>
+      <p id="helpS" class="help-text" data-i18n="helpS" hidden>Quantité de sucre dissous par litre de produit fini (g/L). 150 g/L donne une liqueur peu sucrée, 300 g/L une liqueur très sucrée.</p>
     </div>
 
     <details id="advancedSection" class="advanced sugar-only">
       <summary data-i18n="advancedToggle">Avancé</summary>
       <div class="field">
-        <label for="kNumber"><span data-i18n="labelK">Coefficient d'expansion (k)</span> <span class="unit" data-i18n="unitMLg">mL/g</span></label>
+        <div class="field__head">
+          <label id="lblK" for="kNumber"><span data-i18n="labelK">Coefficient d'expansion (k)</span> <span class="unit" data-i18n="unitMLg">mL/g</span></label>
+          <button type="button" id="helpBtnK" class="help-btn" aria-expanded="false" aria-controls="helpK" aria-labelledby="helpBtnK lblK" data-i18n-aria-label="helpBtnLabel">?</button>
+        </div>
         <div class="field__controls">
-          <input type="range" id="kRange" min="0.1" max="1" step="0.01" value="0.63" />
+          <input type="range" id="kRange" aria-labelledby="lblK" min="0.1" max="1" step="0.01" value="0.63" />
           <input type="number" id="kNumber" min="0.1" max="1" step="0.01" value="0.63" inputmode="decimal" />
         </div>
+        <p id="helpK" class="help-text" data-i18n="helpK" hidden>Volume ajouté par chaque gramme de sucre dissous (≈ 0,63 mL/g pour le saccharose). À ne modifier que pour un autre sucre.</p>
       </div>
     </details>
   </section>

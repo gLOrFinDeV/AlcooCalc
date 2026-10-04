@@ -506,6 +506,22 @@ function wireEvents() {
     });
   });
 
+  document.querySelectorAll('.help-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const panel = $(btn.getAttribute('aria-controls'));
+      const open = panel.hidden;
+      panel.hidden = !open;
+      btn.setAttribute('aria-expanded', String(open));
+    });
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key !== 'Escape') return;
+    document.querySelectorAll('.help-btn[aria-expanded="true"]').forEach((btn) => {
+      $(btn.getAttribute('aria-controls')).hidden = true;
+      btn.setAttribute('aria-expanded', 'false');
+    });
+  });
+
   els.btnReset.addEventListener('click', resetToDefaults);
   els.btnCopy.addEventListener('click', copyResults);
   els.btnClearHistory.addEventListener('click', () => {

@@ -284,11 +284,57 @@ button:focus-visible {
   align-items: center;
 }
 
-.field__hint {
-  margin: 0.35rem 0 0;
-  font-size: 0.72rem;
-  color: var(--terminal-dim);
-  font-style: italic;
+.field__head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
+}
+
+.field .field__head label {
+  margin-bottom: 0;
+}
+
+.card-title--help {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.help-btn {
+  flex-shrink: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+  padding: 0;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid var(--terminal-dim);
+  color: var(--terminal-green);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1;
+  letter-spacing: 0;
+  cursor: pointer;
+}
+
+.help-btn:hover,
+.help-btn[aria-expanded='true'] {
+  background: var(--terminal-green);
+  border-color: var(--terminal-green);
+  color: #000;
+}
+
+.help-text {
+  margin: 0.6rem 0 0;
+  padding: 0.6rem 0.8rem;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  border-left: 2px solid var(--terminal-green);
 }
 
 .terminal-select:disabled,

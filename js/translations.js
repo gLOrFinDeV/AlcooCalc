@@ -10,11 +10,15 @@ const TRANSLATIONS = {
     inputsTitle: 'Paramètres',
     labelV0: 'Volume initial (V₀)',
     labelVfTarget: 'Volume cible (V₁)',
-    vfTargetHint: 'Si renseigné, remplace V₀ : le volume initial nécessaire est calculé automatiquement.',
     labelC0: 'Alcool initial (C₀)',
     labelCf: 'Alcool cible (C₁)',
     labelSconc: 'Sucre visé (S)',
     labelK: "Coefficient d'expansion (k)",
+    helpBtnLabel: 'Aide',
+    helpPreset: "Eau-de-vie : on dilue simplement avec de l'eau. Liqueur : on dilue et on ajoute du sucre.",
+    helpVf: "Volume final souhaité. S'il est rempli, l'app calcule le volume d'alcool de départ nécessaire.",
+    helpS: 'Quantité de sucre dissous par litre de produit fini (g/L). 150 g/L donne une liqueur peu sucrée, 300 g/L une liqueur très sucrée.',
+    helpK: "Volume ajouté par chaque gramme de sucre dissous (≈ 0,63 mL/g pour le saccharose). À ne modifier que pour un autre sucre.",
     advancedToggle: 'Avancé',
     unitL: 'L',
     unitPercent: '%',
@@ -65,11 +69,15 @@ const TRANSLATIONS = {
     inputsTitle: 'Parameters',
     labelV0: 'Initial volume (V₀)',
     labelVfTarget: 'Target volume (V₁)',
-    vfTargetHint: 'If set, this replaces V₀: the required initial volume is calculated automatically.',
     labelC0: 'Initial ABV (C₀)',
     labelCf: 'Target ABV (C₁)',
     labelSconc: 'Target sugar (S)',
     labelK: 'Expansion coefficient (k)',
+    helpBtnLabel: 'Help',
+    helpPreset: 'Spirit: simply dilute with water. Liqueur: dilute and add sugar.',
+    helpVf: 'Desired final volume. When filled in, the app works out the starting volume of alcohol needed.',
+    helpS: 'Amount of sugar dissolved per litre of finished product (g/L). 150 g/L gives a lightly sweet liqueur, 300 g/L a very sweet one.',
+    helpK: 'Volume added by each gram of dissolved sugar (≈ 0.63 mL/g for sucrose). Only change it for another kind of sugar.',
     advancedToggle: 'Advanced',
     unitL: 'L',
     unitPercent: '%',
@@ -151,6 +159,9 @@ function applyTranslations(lang) {
   document.querySelectorAll('[data-i18n-placeholder]').forEach((el) => {
     const key = el.getAttribute('data-i18n-placeholder');
     el.setAttribute('placeholder', t(key, l));
+  });
+  document.querySelectorAll('[data-i18n-aria-label]').forEach((el) => {
+    el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria-label'), l));
   });
   document.querySelectorAll('[data-lang-btn]').forEach((el) => {
     el.classList.toggle('is-active', el.getAttribute('data-lang-btn') === l);
