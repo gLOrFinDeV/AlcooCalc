@@ -673,6 +673,7 @@ function initApp() {
   setTimeout(() => {
     liveReady = true;
   }, 0);
+  document.dispatchEvent(new Event('alcoocalc:ready'));
 
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {

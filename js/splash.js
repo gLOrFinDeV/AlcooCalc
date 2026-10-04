@@ -64,14 +64,34 @@
   const CHARS = 'ｦｱｳｴｵｶｷｹｺｻｼｽｾｿﾀﾂﾃﾅﾆﾇﾈﾊﾋﾎﾏﾐﾑﾒﾓﾔﾕﾗﾘﾜ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   const FONT_SIZE = 18;
 
+  const isNearBlack = (cssColor) => {
+    const m = cssColor.match(/rgba?\(([^)]+)\)/);
+    if (!m) return false;
+    const [r, g, b] = m[1].split(',').map((v) => parseFloat(v));
+    return Math.max(r, g, b) < 40;
+  };
+
+  // Texte noir sur fond vert (bouton actif) : invisible sur le canvas noir, on le dessine en vert.
+  const lockColor = (cssColor) => (isNearBlack(cssColor) ? '#00cc52' : cssColor);
+
   // Récupère les caractères réellement visibles à l'écran (texte + position +
   // taille + couleur) depuis le vrai DOM, pour pouvoir en "verrouiller" une
-  // partie au bon endroit pendant la pluie.
+  // partie au bon endroit pendant la pluie. La position est lue caractère par
+  // caractère (Range), ce qui reste exact pour le texte qui passe à la ligne
+  // ou qui a un espacement de lettres ; les valeurs des champs numériques en
+  // font partie.
   function harvestRealChars() {
     if (!appContent) return [];
     const results = [];
     const viewportW = window.innerWidth;
     const viewportH = window.innerHeight;
+    const inViewport = (rect) =>
+      rect.width > 0 &&
+      rect.height > 0 &&
+      rect.bottom >= 0 &&
+      rect.top <= viewportH &&
+      rect.right >= 0 &&
+      rect.left <= viewportW;
 
     const walker = document.createTreeWalker(appContent, NodeFilter.SHOW_TEXT, {
       acceptNode(node) {
@@ -79,40 +99,65 @@
       },
     });
 
+    const range = document.createRange();
     let node;
     while ((node = walker.nextNode())) {
       const parent = node.parentElement;
-      if (!parent) continue;
-
-      const range = document.createRange();
-      range.selectNodeContents(node);
-      const rect = range.getBoundingClientRect();
-      if (rect.width === 0 || rect.height === 0) continue;
-      if (rect.bottom < 0 || rect.top > viewportH || rect.right < 0 || rect.left > viewportW) continue;
+      if (!parent || parent.closest('.sr-only, .skip-link, [hidden]')) continue;
 
       const style = getComputedStyle(parent);
+      if (style.visibility === 'hidden' || style.display === 'none') continue;
       const fontSize = parseFloat(style.fontSize) || FONT_SIZE;
-      let text = node.textContent;
-      if (style.textTransform === 'uppercase') text = text.toUpperCase();
+      const upper = style.textTransform === 'uppercase';
+      const text = node.textContent;
 
+      for (let i = 0; i < text.length; i++) {
+        const char = text[i];
+        if (!char.trim()) continue;
+        range.setStart(node, i);
+        range.setEnd(node, i + 1);
+        const rect = range.getBoundingClientRect();
+        if (!inViewport(rect)) continue;
+        results.push({
+          char: upper ? char.toUpperCase() : char,
+          x: rect.left,
+          y: rect.top + fontSize * 0.85,
+          fontSize,
+          fontWeight: style.fontWeight,
+          fontFamily: style.fontFamily,
+          color: lockColor(style.color),
+        });
+      }
+    }
+
+    appContent.querySelectorAll('input[type="number"]').forEach((input) => {
+      const rect = input.getBoundingClientRect();
+      if (!input.value || !inViewport(rect)) return;
+      const style = getComputedStyle(input);
+      const fontSize = parseFloat(style.fontSize) || FONT_SIZE;
       ctx.font = `${style.fontWeight} ${fontSize}px ${style.fontFamily}`;
-      let x = rect.left;
-      for (const char of text) {
-        const width = ctx.measureText(char).width;
+      const padLeft = parseFloat(style.paddingLeft) + parseFloat(style.borderLeftWidth);
+      const padRight = parseFloat(style.paddingRight) + parseFloat(style.borderRightWidth);
+      const total = ctx.measureText(input.value).width;
+      const alignRight = style.textAlign === 'right' || style.textAlign === 'end';
+      let x = alignRight ? rect.right - padRight - total : rect.left + padLeft;
+      const y = rect.top + rect.height / 2 + fontSize * 0.35;
+      for (const char of input.value) {
         if (char.trim()) {
           results.push({
             char,
             x,
-            y: rect.top + fontSize * 0.85,
+            y,
             fontSize,
             fontWeight: style.fontWeight,
             fontFamily: style.fontFamily,
-            color: style.color,
+            color: lockColor(style.color),
           });
         }
-        x += width;
+        x += ctx.measureText(char).width;
       }
-    }
+    });
+
     return results;
   }
 
@@ -137,7 +182,15 @@
     }));
   }
 
-  const lockTargets = pickLockTargets();
+  // Le DOM n'est dans son état final (langue, unités, valeurs) qu'une fois l'app initialisée.
+  let lockTargets = [];
+  document.addEventListener(
+    'alcoocalc:ready',
+    () => {
+      lockTargets = pickLockTargets();
+    },
+    { once: true }
+  );
 
   let columns = 0;
   let drops = [];

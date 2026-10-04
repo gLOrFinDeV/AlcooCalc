@@ -8,6 +8,22 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-10-04 (suite 16) — branche `v2.1`
+- Fait : **splash screen recalé sur la nouvelle UI**, durées et fondu inchangés (2,5 s de pluie,
+  ralentissement 0,5 s, fondu 1,05 s, 40 % de caractères verrouillés). Causes du décalage : (1) `js/splash.js`
+  relevait les caractères du DOM dès son chargement, avant l'initialisation de l'app, donc avec le
+  texte statique français, sans les valeurs des champs ni l'état final (EN, unités, preset) ;
+  (2) positions calculées pour la ligne entière (faux dès qu'un texte passe à la ligne ou a un
+  espacement de lettres) ; (3) éléments `.sr-only` pris en compte ; (4) texte noir des boutons
+  actifs invisible sur le canvas noir.
+- Corrections : le relevé attend l'événement `alcoocalc:ready` émis à la fin d'`initApp()` ; position
+  lue caractère par caractère (`Range`) ; éléments `.sr-only`, `.skip-link` et `[hidden]` ignorés ;
+  texte quasi noir redessiné en vert du thème ; valeurs des champs numériques ajoutées aux
+  caractères verrouillables. Cache PWA bumpé à `alcoocalc-v47`.
+- Testé dans le navigateur (première ouverture, anglais) : à ~2 s les caractères figés forment
+  « Spirit / Liqueur », « Initial volume », « 96 / 30 / 200 », « Water / Sugar » aux emplacements
+  exacts de l'interface finale.
+
 ## 2026-10-04 (suite 15) — branche `v2.1`
 - Fait : **valeurs par défaut de première ouverture**, définies par l'utilisateur : langue EN,
   unités Metric, Alcool de base Liqueur, V₀ = 1 L, C₀ = 96 %, C₁ = 30 %, S = 200 g/L
