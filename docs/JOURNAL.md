@@ -8,6 +8,18 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-10-04 (suite 18) — branche `v2.1`
+- Fait : section extensible **« CONVERSION »** (`<details id="conversionSection">`) à la fin de la
+  carte Réglages : table de référence dans les deux sens — volume (gal ↔ L, fl oz ↔ mL, 1 gal =
+  128 fl oz), masse (lb ↔ kg, oz ↔ g, 1 lb = 16 oz), sucre (oz/gal ↔ g/L, fl oz/oz ↔ mL/g) et
+  rappel « US proof = 2 × % ABV ». Valeurs calculées dans `renderConversionTable()` (`js/app.js`) à
+  partir des constantes de `js/units.js` (4 chiffres significatifs), donc toujours cohérentes avec les
+  conversions réellement utilisées ; regénérée à chaque changement de langue ; fermée par défaut ;
+  pleine largeur sur desktop, lignes qui passent à la ligne sur mobile. i18n FR/EN. Cache PWA bumpé à
+  `alcoocalc-v49`.
+- Testé dans le navigateur : valeurs de la table (1 gal = 3,785 L, 1 lb = 0,4536 kg, 1 oz = 28,35 g,
+  1 oz/gal = 7,489 g/L…), libellés FR/EN, rendu desktop et mobile (375 px, pas de défilement horizontal).
+
 ## 2026-10-04 (suite 17) — branche `v2.1`
 - Vérification arithmétique des unités US demandée par l'utilisateur (les essais précédents ne
   comparaient pas à un calcul indépendant). Méthode : recalcul séparé, entièrement en gal/oz (US)

@@ -911,3 +911,35 @@ input[type='range']::-moz-range-thumb {
     display: none;
   }
 }
+
+.conversion {
+  grid-column: 1 / -1;
+}
+
+.conversion-table {
+  padding: 0.2rem 0 0.4rem;
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.conv-group {
+  margin-top: 0.7rem;
+  color: var(--terminal-dim);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.conv-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  column-gap: 1rem;
+  padding: 0.25rem 0;
+  border-bottom: 1px dashed var(--border-color);
+  color: var(--text-primary);
+}
+
+.conv-row span {
+  white-space: nowrap;
+}

@@ -565,7 +565,69 @@ function resetToDefaults() {
   compute({ recordHistory: false });
 }
 
+// Table de référence des conversions, calculée à partir des constantes de units.js
+const CONVERSION_GROUPS = [
+  {
+    title: 'conversionVolume',
+    rows: [
+      ['gal', 'L', L_PER_GAL],
+      ['fl oz', 'mL', ML_PER_FLOZ],
+      ['gal', 'fl oz', FLOZ_PER_GAL, true],
+    ],
+  },
+  {
+    title: 'conversionMass',
+    rows: [
+      ['lb', 'kg', G_PER_LB / 1000],
+      ['oz', 'g', G_PER_OZ],
+      ['lb', 'oz', G_PER_LB / G_PER_OZ, true],
+    ],
+  },
+  {
+    title: 'conversionSugar',
+    rows: [
+      ['oz/gal', 'g/L', G_PER_OZ / L_PER_GAL],
+      ['fl oz/oz', 'mL/g', ML_PER_FLOZ / G_PER_OZ],
+    ],
+  },
+];
+
+function renderConversionTable() {
+  const fmt = (n) => String(parseFloat(n.toPrecision(4)));
+  const container = $('conversionTable');
+  container.innerHTML = '';
+
+  const addTitle = (key) => {
+    const h = document.createElement('div');
+    h.className = 'conv-group';
+    h.textContent = t(key);
+    container.appendChild(h);
+  };
+  const addRow = (texts) => {
+    const row = document.createElement('div');
+    row.className = 'conv-row';
+    texts.forEach((text) => {
+      const cell = document.createElement('span');
+      cell.textContent = text;
+      row.appendChild(cell);
+    });
+    container.appendChild(row);
+  };
+
+  CONVERSION_GROUPS.forEach((group) => {
+    addTitle(group.title);
+    group.rows.forEach(([from, to, factor, oneWay]) => {
+      const texts = [`1 ${from} = ${fmt(factor)} ${to}`];
+      if (!oneWay) texts.push(`1 ${to} = ${fmt(1 / factor)} ${from}`);
+      addRow(texts);
+    });
+  });
+  addTitle('conversionAlcohol');
+  addRow([t('conversionProof')]);
+}
+
 function onLanguageChanged(lang) {
+  renderConversionTable();
   setFavoritesFilter(favoritesFilterActive);
   renderHistory();
   compute({ recordHistory: false });
