@@ -8,6 +8,19 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-10-04 (suite)
+- Fait : le preset **Eau-de-vie** passe en mode "dilution simple, sans sucre" (demande de
+  l'utilisateur : juste diluer le distillat au degré final). Classe `no-sugar` sur `<body>`
+  (posée par `setPreset()`), éléments marqués `.sugar-only` masqués en CSS : champ "Sucre visé",
+  section Avancé (k), lignes Résultats "Sucre à ajouter" et "Expansion", item Sucre du résumé
+  collant. Dans `compute()`, S est forcé à 0 pour ce preset (la valeur saisie reste mémorisée et
+  revient en repassant sur Liqueur). Formule détaillée simplifiée (V₁ = V₀·C₀/C₁ puis Vₑ = V₁ − V₀,
+  2 étapes) quand S = 0 ; modèle de copie dédié `copyTemplateNoSugar` (FR/EN) ; l'historique
+  n'affiche plus le sucre pour les entrées à S = 0, et recharger une telle entrée réactive le mode
+  eau-de-vie. Cache PWA bumpé à `alcoocalc-v33`.
+- Testé dans le navigateur : champs/lignes masqués puis réaffichés (Liqueur), calcul 1 L 86→45 % =
+  0,91 L d'eau, formule à 2 étapes, rechargement d'historique avec/sans sucre.
+
 ## 2026-10-04
 - Fait : le menu déroulant "Alcool de base" (11 presets + Personnalisé) est remplacé par un
   **toggle à deux options**, "Eau-de-vie" (86 % → 45 %) et "Liqueur" (96 % → 20 %), demandé par

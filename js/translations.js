@@ -51,6 +51,8 @@ const TRANSLATIONS = {
     footerText: '100% local · aucune donnée envoyée · fonctionne hors-ligne',
     copyTemplate:
       'AlcooCalc — {date}\nVolume initial : {v0} L à {c0}%\nCible : {cf}% avec {sconc} g/L de sucre\n---\nEau à ajouter : {ve}\nSucre à ajouter : {ms} g\nVolume final : {vf} L\nExpansion (sucre) : {exp} mL',
+    copyTemplateNoSugar:
+      'AlcooCalc — {date}\nVolume initial : {v0} L à {c0}%\nCible : {cf}%\n---\nEau à ajouter : {ve}\nVolume final : {vf} L',
   },
   en: {
     appTitle: 'AlcooCalc',
@@ -102,6 +104,8 @@ const TRANSLATIONS = {
     footerText: '100% local · no data sent · works offline',
     copyTemplate:
       'AlcooCalc — {date}\nInitial volume: {v0} L at {c0}%\nTarget: {cf}% with {sconc} g/L sugar\n---\nWater to add: {ve}\nSugar to add: {ms} g\nFinal volume: {vf} L\nSugar expansion: {exp} mL',
+    copyTemplateNoSugar:
+      'AlcooCalc — {date}\nInitial volume: {v0} L at {c0}%\nTarget: {cf}%\n---\nWater to add: {ve}\nFinal volume: {vf} L',
   },
 };
 

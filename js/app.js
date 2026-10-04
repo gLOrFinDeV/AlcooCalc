@@ -99,6 +99,7 @@ function saveHistory(history) {
 
 function setPreset(key) {
   currentPreset = SPIRIT_PRESETS[key] ? key : 'custom';
+  document.body.classList.toggle('no-sugar', currentPreset === 'eaudevie');
   els.presetButtons.forEach((btn) => {
     const active = btn.dataset.preset === currentPreset;
     btn.classList.toggle('is-active', active);
@@ -219,18 +220,19 @@ function compute({ recordHistory } = { recordHistory: false }) {
   els.v0Range.disabled = vfTargetActive;
   els.v0Field.classList.toggle('is-computed', vfTargetActive);
 
-  const results = calculateDilution(v0, input.c0, input.cf, input.sconc, kLg);
+  const sconc = currentPreset === 'eaudevie' ? 0 : input.sconc;
+  const results = calculateDilution(v0, input.c0, input.cf, sconc, kLg);
   lastResults = results;
   renderResults(results);
 
   if (els.formulaSection.open) {
-    renderFormula(els.formulaContainer, els.formulaSteps, v0, input.c0, input.cf, input.sconc, kLg, results);
+    renderFormula(els.formulaContainer, els.formulaSteps, v0, input.c0, input.cf, sconc, kLg, results);
   }
 
   saveInputs(Object.assign({}, input, { v0 }));
 
   if (recordHistory && results.feasible) {
-    pushHistory(Object.assign({}, input, { v0, k: kLg }), results);
+    pushHistory(Object.assign({}, input, { v0, sconc, k: kLg }), results);
   }
 }
 
@@ -279,9 +281,10 @@ function loadHistoryEntry(entry) {
     vfTarget: Number.isFinite(entry.vfTarget) ? entry.vfTarget : null,
     c0: entry.c0,
     cf: entry.cf,
-    sconc: entry.sconc,
+    // une entrée sans sucre revient en mode "eau-de-vie" ; le sucre saisi est conservé
+    sconc: entry.sconc > 0 ? entry.sconc : parseFloat(els.sconcNumber.value),
     k: entry.k * 1000, // stocké en L/g dans l'historique, le champ affiche du mL/g
-    preset: 'custom',
+    preset: entry.sconc > 0 ? 'custom' : 'eaudevie',
     advancedOpen: els.advancedSection.open,
     formulaOpen: els.formulaSection.open,
   });
@@ -322,7 +325,7 @@ function renderHistory() {
     main.innerHTML = `
       <span class="history-row__date">${d.toLocaleString()}</span>
       <span class="history-row__spec">${entry.v0.toFixed(2)}${t('unitL')} · ${entry.c0}${t('unitPercent')} → ${entry.cf}${t('unitPercent')}</span>
-      <span class="history-row__result">${t('historyWaterLabel')}: ${entry.ve.toFixed(2)}${t('unitL')} · ${t('historySugarLabel')}: ${entry.ms.toFixed(1)}g</span>
+      <span class="history-row__result">${t('historyWaterLabel')}: ${entry.ve.toFixed(2)}${t('unitL')}${entry.sconc > 0 ? ` · ${t('historySugarLabel')}: ${entry.ms.toFixed(1)}g` : ''}</span>
     `;
     main.addEventListener('click', () => loadHistoryEntry(entry));
 
@@ -357,7 +360,8 @@ function renderHistory() {
 function copyResults() {
   if (!lastResults || !lastResults.feasible) return;
   const input = readInputsFromForm();
-  const text = t('copyTemplate')
+  const noSugar = currentPreset === 'eaudevie';
+  const text = t(noSugar ? 'copyTemplateNoSugar' : 'copyTemplate')
     .replace('{date}', new Date().toLocaleString())
     .replace('{v0}', input.v0)
     .replace('{c0}', input.c0)

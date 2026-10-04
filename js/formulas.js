@@ -49,11 +49,21 @@ function calculateDilution(V0, C0, Cf, S_conc, k) {
 function generateFormulaSteps(V0, C0, Cf, S_conc, k, results) {
   const fmt = (n, d = 3) => Number(n).toFixed(d);
   const dV = '\\Delta V_s';
+  const step1 = {
+    tex: 'V_1 = \\dfrac{V_0 \\cdot C_0}{C_1}',
+    substituted: `V_1 = \\dfrac{${fmt(V0)} \\times ${fmt(C0, 1)}}{${fmt(Cf, 1)}} = ${fmt(results.Vf)}\\ \\text{L}`,
+  };
+  if (!(S_conc > 0)) {
+    return [
+      step1,
+      {
+        tex: 'V_e = V_1 - V_0',
+        substituted: `V_e = ${fmt(results.Vf)} - ${fmt(V0)} = ${fmt(results.Ve)}\\ \\text{L}`,
+      },
+    ];
+  }
   return [
-    {
-      tex: 'V_1 = \\dfrac{V_0 \\cdot C_0}{C_1}',
-      substituted: `V_1 = \\dfrac{${fmt(V0)} \\times ${fmt(C0, 1)}}{${fmt(Cf, 1)}} = ${fmt(results.Vf)}\\ \\text{L}`,
-    },
+    step1,
     {
       tex: 'm_s = S \\cdot V_1',
       substituted: `m_s = ${fmt(S_conc, 1)} \\times ${fmt(results.Vf)} = ${fmt(results.ms, 1)}\\ \\text{g}`,
@@ -73,7 +83,9 @@ function renderFormula(containerEl, stepsContainerEl, V0, C0, Cf, S_conc, k, res
   if (typeof katex === 'undefined') return;
 
   const dV = '\\Delta V_s';
-  const mainFormula = `\\begin{aligned} V_1 &= \\dfrac{V_0 \\cdot C_0}{C_1} \\\\ m_s &= S \\cdot V_1 \\\\ ${dV} &= k \\cdot m_s \\\\ V_e &= V_1 - V_0 - ${dV} \\end{aligned}`;
+  const mainFormula = S_conc > 0
+    ? `\\begin{aligned} V_1 &= \\dfrac{V_0 \\cdot C_0}{C_1} \\\\ m_s &= S \\cdot V_1 \\\\ ${dV} &= k \\cdot m_s \\\\ V_e &= V_1 - V_0 - ${dV} \\end{aligned}`
+    : '\\begin{aligned} V_1 &= \\dfrac{V_0 \\cdot C_0}{C_1} \\\\ V_e &= V_1 - V_0 \\end{aligned}';
 
   katex.render(mainFormula, containerEl, { throwOnError: false, displayMode: true });
 

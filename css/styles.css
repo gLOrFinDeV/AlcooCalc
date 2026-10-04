@@ -145,6 +145,10 @@ body.app-ready .app-content {
   border-color: var(--terminal-green);
 }
 
+.no-sugar .sugar-only {
+  display: none !important;
+}
+
 .preset-toggle {
   display: flex;
   gap: 0.5rem;
