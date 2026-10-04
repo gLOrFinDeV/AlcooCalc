@@ -8,6 +8,10 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-10-04 (suite 22) — branche `v2.1`
+- Fait : pied de page — « v2.1 » suivi d'un simple espace (au lieu de « v2.1 · »), sur demande de
+  l'utilisateur. Cache PWA bumpé à `alcoocalc-v53`.
+
 ## 2026-10-04 (suite 21) — branche `v2.1`
 - Fait : le pied de page commence par le numéro de version — « v2.1 · code source ouvert, avec
   amour gLOrFinD · … » (FR) / « v2.1 · source code available, with love gLOrFinD · … » (EN),
