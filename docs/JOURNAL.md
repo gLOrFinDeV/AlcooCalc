@@ -8,6 +8,12 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-10-04 (suite 7)
+- Fait : pied de page rendu cohérent avec la licence PolyForm Noncommercial (ADR 0004) —
+  "100% open source" remplacé par « code source ouvert » en FR (demande de l'utilisateur) et par
+  "source-available" en EN (équivalent exact de ma part, "open source" étant juridiquement
+  inexact). Cache PWA bumpé à `alcoocalc-v38`.
+
 ## 2026-10-04 (suite 6)
 - Décidé : licence **PolyForm Noncommercial 1.0.0** (ADR 0004) — l'utilisateur veut partager le
   code mais interdire sa reprise commerciale. Constat : le dépôt n'avait pas de fichier `LICENSE`

@@ -50,7 +50,7 @@ const TRANSLATIONS = {
     errorPositive: 'Toutes les valeurs doivent être supérieures à zéro.',
     errorNegativeWater: "Combinaison impossible : trop de sucre pour cette dilution (eau négative). Réduisez le sucre visé ou l'écart de dilution.",
     langSwitchLabel: 'Langue',
-    footerText: '100% open source, avec amour gLOrFinD · aucune donnée envoyée · fonctionne hors-ligne',
+    footerText: 'code source ouvert, avec amour gLOrFinD · aucune donnée envoyée · fonctionne hors-ligne',
     copyTemplate:
       'AlcooCalc — {date}\nVolume initial : {v0} L à {c0}%\nCible : {cf}% avec {sconc} g/L de sucre\n---\nEau à ajouter : {ve}\nSucre à ajouter : {ms} g\nVolume final : {vf} L\nExpansion (sucre) : {exp} mL',
     copyTemplateNoSugar:
@@ -105,7 +105,7 @@ const TRANSLATIONS = {
     errorPositive: 'All values must be greater than zero.',
     errorNegativeWater: 'Impossible combination: too much sugar for this dilution (negative water). Lower the target sugar or the dilution gap.',
     langSwitchLabel: 'Language',
-    footerText: '100% open source, with love gLOrFinD · no data sent · works offline',
+    footerText: 'source-available, with love gLOrFinD · no data sent · works offline',
     copyTemplate:
       'AlcooCalc — {date}\nInitial volume: {v0} L at {c0}%\nTarget: {cf}% with {sconc} g/L sugar\n---\nWater to add: {ve}\nSugar to add: {ms} g\nFinal volume: {vf} L\nSugar expansion: {exp} mL',
     copyTemplateNoSugar:
