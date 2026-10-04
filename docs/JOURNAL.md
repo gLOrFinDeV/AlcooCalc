@@ -8,6 +8,10 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-10-04 (suite 5)
+- Fait : pied de page FR — "with love" traduit en "avec amour" ("100% open source, avec amour
+  gLOrFinD · …") ; la version EN garde "with love". Cache PWA bumpé à `alcoocalc-v37`.
+
 ## 2026-10-04 (suite 4)
 - Fait : pied de page — "100% local" remplacé par "100% open source, with love gLOrFinD" (même
   libellé en FR et EN, le reste de la phrase inchangé) dans `index.html` et `js/translations.js`.
