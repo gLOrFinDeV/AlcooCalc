@@ -572,6 +572,17 @@ function onLanguageChanged(lang) {
 }
 
 function wireEvents() {
+  // Dès que l'utilisateur touche un champ, sa valeur métrique d'origine (avant arrondi) n'a plus
+  // lieu d'être : ce qu'il a saisi fait foi. Enregistré avant syncPair pour passer en premier.
+  [
+    ['v0', els.v0Range, els.v0Number],
+    ['vfTarget', els.vfTargetRange, els.vfTargetNumber],
+    ['sconc', els.sconcRange, els.sconcNumber],
+    ['k', els.kRange, els.kNumber],
+  ].forEach(([field, rangeEl, numberEl]) => {
+    [rangeEl, numberEl].forEach((el) => el.addEventListener('input', () => delete exactValues[field]));
+  });
+
   syncPair(els.v0Range, els.v0Number, () => compute({ recordHistory: false }));
   syncPair(els.c0Range, els.c0Number, () => compute({ recordHistory: false }));
   syncPair(els.cfRange, els.cfNumber, () => compute({ recordHistory: false }));

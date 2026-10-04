@@ -8,6 +8,22 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-10-04 (suite 17) — branche `v2.1`
+- Vérification arithmétique des unités US demandée par l'utilisateur (les essais précédents ne
+  comparaient pas à un calcul indépendant). Méthode : recalcul séparé, entièrement en gal/oz (US)
+  puis en L/g (métrique), comparé aux résultats de l'app. **Bug trouvé** : quand l'utilisateur saisissait
+  (ou faisait glisser un curseur sur) une valeur égale à l'arrondi affiché de la valeur d'origine
+  (ex. k = 0,60 fl oz/oz alors que 0,63 mL/g s'affiche 0,60), `exactValues` rendait la valeur
+  métrique d'origine au lieu de la valeur saisie (écart ~0,6 % sur k, ~0,1 % sur l'eau). Correctif
+  (`js/app.js`) : toucher un champ (`input`) supprime sa valeur exacte mémorisée ; elle ne sert plus
+  qu'à éviter la dérive lors d'un simple changement d'unité. Cache PWA bumpé à `alcoocalc-v48`.
+- Résultats après correctif : 6 cas US et 4 cas métriques identiques au calcul indépendant (écart
+  ≤ 3·10⁻¹⁴) ; mêmes grandeurs physiques en métrique puis en US → résultats identiques (écart 0) ;
+  retaper les valeurs US arrondies (50,7 fl oz / 24 oz/gal / 0,56) change le résultat de −0,16 % (eau)
+  et −0,19 % (sucre), c'est-à-dire l'effet de l'arrondi de saisie seul.
+- Précision : les défauts US (24 fl oz, 30 oz/gal) ne sont pas l'équivalent exact des défauts
+  métriques (1 L, 200 g/L), les résultats diffèrent donc volontairement (décision de l'utilisateur).
+
 ## 2026-10-04 (suite 16) — branche `v2.1`
 - Fait : **splash screen recalé sur la nouvelle UI**, durées et fondu inchangés (2,5 s de pluie,
   ralentissement 0,5 s, fondu 1,05 s, 40 % de caractères verrouillés). Causes du décalage : (1) `js/splash.js`
