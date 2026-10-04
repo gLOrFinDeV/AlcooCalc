@@ -8,6 +8,12 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-10-04 (suite 9)
+- Fait : section « Auteur » ajoutée au README (gLOrFinD, première version offerte à la communauté,
+  contact `glorfind@pm.me`, mention des demandes d'usage commercial) ; la section Licence renvoie
+  vers elle au lieu de GitHub. Le texte juridique de `LICENSE` n'est pas modifié. Aucun fichier de
+  l'app touché, pas de bump du cache PWA.
+
 ## 2026-10-04 (suite 8)
 - Fait : pied de page EN — "source-available" remplacé par "source code available" (demande de
   l'utilisateur). Cache PWA bumpé à `alcoocalc-v39`.

@@ -78,8 +78,8 @@ En clair (le texte de [`LICENSE`](LICENSE) fait foi) :
 
 Cette licence est dite *source-available* : le code est ouvert à la lecture et à la modification,
 mais, comme elle interdit l'usage commercial, elle n'entre pas dans la définition « open source »
-de l'[OSI](https://opensource.org/osd). Pour un usage commercial, contactez l'auteur via
-[GitHub](https://github.com/gLOrFinDeV).
+de l'[OSI](https://opensource.org/osd). Pour un usage commercial, contactez l'auteur
+(voir [Auteur](#auteur) ci-dessous).
 
 ### Composants tiers
 
@@ -96,3 +96,15 @@ Les suggestions et corrections sont les bienvenues via les *issues* et *pull req
 En proposant une contribution, vous acceptez qu'elle soit publiée sous la même licence
 (PolyForm Noncommercial 1.0.0). Les règles de travail du projet sont décrites dans
 [`AGENTS.md`](AGENTS.md) et l'historique des décisions dans [`docs/`](docs/).
+
+## Auteur
+
+🥃 **gLOrFinD** a publié la première version d'AlcooCalc et l'offre à la communauté, avec amour,
+pour que chacun puisse doser, diluer, macérer, apprendre et améliorer le code librement. Si vous
+l'utilisez, le modifiez, ou avez simplement une idée, un retour ou une recette à partager :
+
+📬 **[glorfind@pm.me](mailto:glorfind@pm.me)**
+
+Une question sur un usage commercial ? Écrivez-moi aussi, on en discute.
+
+*Santé !* 🍋
