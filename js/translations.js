@@ -58,7 +58,7 @@ const TRANSLATIONS = {
     appTitle: 'AlcooCalc',
     appSubtitle: 'Alcohol + Sugar Dilution Calculator',
     presetLabel: 'Base spirit',
-    preset_eaudevie: 'Fruit brandy',
+    preset_eaudevie: 'Spirit',
     preset_liqueur: 'Liqueur',
     inputsTitle: 'Parameters',
     labelV0: 'Initial volume (V₀)',

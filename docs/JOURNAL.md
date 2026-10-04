@@ -8,6 +8,10 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-10-04 (suite 2)
+- Fait : libellé anglais du preset `eaudevie` changé de "Fruit brandy" en "Spirit"
+  (`js/translations.js`). Cache PWA bumpé à `alcoocalc-v34`. Vérifié en EN : "Spirit / Liqueur".
+
 ## 2026-10-04 (suite)
 - Fait : le preset **Eau-de-vie** passe en mode "dilution simple, sans sucre" (demande de
   l'utilisateur : juste diluer le distillat au degré final). Classe `no-sugar` sur `<body>`
