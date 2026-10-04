@@ -8,6 +8,13 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-10-04 (suite 21) — branche `v2.1`
+- Fait : le pied de page commence par le numéro de version — « v2.1 · code source ouvert, avec
+  amour gLOrFinD · … » (FR) / « v2.1 · source code available, with love gLOrFinD · … » (EN),
+  séparateur « · » comme le reste de la ligne. Le numéro est écrit en dur dans `footerText`
+  (`js/translations.js`, FR et EN) et dans le texte statique de `index.html` : à mettre à jour à chaque
+  nouvelle version. Cache PWA bumpé à `alcoocalc-v52`.
+
 ## 2026-10-04 (suite 20) — branche `v2.1`
 - Fait : libellé du groupe Eau-de-vie / Liqueur renommé « Alcool de base » (FR) / « Base spirit » (EN)
   → « Dilution » dans les deux langues (`presetLabel`, y compris le texte statique de `index.html`).
