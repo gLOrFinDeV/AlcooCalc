@@ -31,10 +31,6 @@ tags: [roadmap]
   Vf × Cf / C0) ; le champ V₀ devient alors lecture seule (grisé) et affiche la valeur calculée,
   redevient éditable dès que le champ est vidé.
 
-## 🔜 À faire
-- Test visuel sur un téléphone réel (au-delà de l'émulation mobile du navigateur) — le site étant
-  maintenant en ligne, l'utilisateur peut le faire directement.
-
 ## 💬 À trancher
 - Faut-il des icônes PWA soignées (actuellement des placeholders générés "AC" sur fond noir/vert) ?
 
@@ -62,11 +58,21 @@ tags: [roadmap]
   [0004](decisions/0004-licence-polyform-noncommercial.md)), README (licence, KaTeX, contribution,
   auteur), pied de page « code source ouvert ».
 
-## 🚧 v2.1 — Unités métriques / US (branche `v2.1`, implémentée, à merger)
-- ✅ Carte **Réglages** en haut de l'app avec trois toggles : **Langue** (FR/EN, en premier),
-  **Unités** (Métrique/US) et **Alcool de base** (Eau-de-vie/Liqueur) ; FR/EN quitte l'en-tête.
+## ✅ v2.1 — Livrée (mergée dans `main` le 2026-10-04)
+- ✅ Carte **Réglages** en haut de l'app : **Langue** (FR/EN, en premier), **Unités**
+  (Métrique/US) et **Dilution** (Eau-de-vie/Liqueur) ; section extensible **Conversions** (table de
+  référence gal/L, fl oz/mL, lb/kg, oz/g, oz/gal, proof US). FR/EN quitte l'en-tête.
 - ✅ **Unités US** (ADR [0005](decisions/0005-unites-metrique-us.md)) : volumes en fl oz (gal), masses
   en oz (lb), sucre en oz/gal, k en fl oz/oz ; formule détaillée en gal/oz ; historique, résumé
   collant, texte copié et textes d'aide suivent le système choisi. Calcul interne et sauvegarde
-  restent en métrique ; choix mémorisé. Unités impériales britanniques écartées.
-- À faire : test sur appareil réel, puis merge dans `main` sur feu vert.
+  restent en métrique (vérifié contre un calcul indépendant) ; choix mémorisé. Unités impériales
+  britanniques écartées.
+- ✅ **Valeurs par défaut de première ouverture** : EN, Metric, Liqueur, 1 L (24 fl oz en US),
+  96 % → 30 %, sucre 200 g/L (30 oz/gal en US) ; preset Liqueur à 96 → 30 %.
+- ✅ **Splash screen** recalé sur la nouvelle interface (caractères figés = UI finale en anglais).
+- ✅ Pied de page « v2.1 code source ouvert / source code available ».
+
+## 🔜 À faire
+- Test visuel sur un téléphone réel (au-delà de l'émulation du navigateur).
+- Mise à jour du service worker : prévenir l'utilisateur (« Nouvelle version disponible ») au lieu de
+  demander un double rafraîchissement.

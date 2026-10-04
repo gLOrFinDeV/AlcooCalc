@@ -8,6 +8,13 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-10-04 (suite 23)
+- Fait : **v2.1 mergée dans `main` et publiée** sur demande explicite de l'utilisateur (« merge et
+  commit en prod »). ROADMAP : v2.1 passée en « Livrée », nouvelle section « À faire » (test sur
+  téléphone réel, notification de mise à jour du service worker). Merge en fast-forward (`main`
+  n'avait pas divergé) ; GitHub Pages redéploie le site depuis `main`.
+- Prochaine étape : test sur appareil réel ; notification de mise à jour ; v2.2 à définir.
+
 ## 2026-10-04 (suite 22) — branche `v2.1`
 - Fait : pied de page — « v2.1 » suivi d'un simple espace (au lieu de « v2.1 · »), sur demande de
   l'utilisateur. Cache PWA bumpé à `alcoocalc-v53`.
