@@ -8,6 +8,11 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-10-04 (suite 20) — branche `v2.1`
+- Fait : libellé du groupe Eau-de-vie / Liqueur renommé « Alcool de base » (FR) / « Base spirit » (EN)
+  → « Dilution » dans les deux langues (`presetLabel`, y compris le texte statique de `index.html`).
+  Le nom accessible du bouton « ? » associé suit automatiquement. Cache PWA bumpé à `alcoocalc-v51`.
+
 ## 2026-10-04 (suite 19) — branche `v2.1`
 - Fait : libellé de la section extensible passé de « Conversion » à « Conversions » (FR et EN,
   `conversionTitle`). Cache PWA bumpé à `alcoocalc-v50`.

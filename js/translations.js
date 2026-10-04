@@ -4,7 +4,7 @@ const TRANSLATIONS = {
   fr: {
     appTitle: 'AlcooCalc',
     appSubtitle: 'Calculateur de dilution alcool + sucre',
-    presetLabel: 'Alcool de base',
+    presetLabel: 'Dilution',
     preset_eaudevie: 'Eau-de-vie',
     preset_liqueur: 'Liqueur',
     inputsTitle: 'Paramètres',
@@ -81,7 +81,7 @@ const TRANSLATIONS = {
   en: {
     appTitle: 'AlcooCalc',
     appSubtitle: 'Alcohol + Sugar Dilution Calculator',
-    presetLabel: 'Base spirit',
+    presetLabel: 'Dilution',
     preset_eaudevie: 'Spirit',
     preset_liqueur: 'Liqueur',
     inputsTitle: 'Parameters',
