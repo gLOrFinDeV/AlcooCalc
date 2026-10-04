@@ -8,6 +8,10 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-10-04 (suite 8)
+- Fait : pied de page EN — "source-available" remplacé par "source code available" (demande de
+  l'utilisateur). Cache PWA bumpé à `alcoocalc-v39`.
+
 ## 2026-10-04 (suite 7)
 - Fait : pied de page rendu cohérent avec la licence PolyForm Noncommercial (ADR 0004) —
   "100% open source" remplacé par « code source ouvert » en FR (demande de l'utilisateur) et par
