@@ -22,6 +22,8 @@ let lastResults = null;
 let favoritesFilterActive = false;
 let currentPreset = 'custom';
 let editingHistoryIndex = null;
+let liveTimer = null;
+let liveReady = false;
 
 function $(id) {
   return document.getElementById(id);
@@ -44,6 +46,7 @@ function cacheEls() {
   els.kNumber = $('kNumber');
   els.advancedSection = $('advancedSection');
   els.errorBox = $('errorBox');
+  els.liveRegion = $('liveRegion');
   els.resultWater = $('resultWater');
   els.resultSugar = $('resultSugar');
   els.resultFinalVolume = $('resultFinalVolume');
@@ -187,6 +190,44 @@ function formatMass(valueGrams) {
   return `${(valueGrams / 1000).toFixed(2)} kg (${valueGrams.toFixed(0)} g)`;
 }
 
+function markInvalidFields(results, { v0, c0, cf, sconc, k }) {
+  const invalid = new Set();
+  if (!results.feasible) {
+    if (results.errors.includes('errorPositive')) {
+      if (!(v0 > 0)) invalid.add(els.v0Number);
+      if (!(c0 > 0)) invalid.add(els.c0Number);
+      if (!(cf > 0)) invalid.add(els.cfNumber);
+      if (currentPreset !== 'eaudevie') {
+        if (!(sconc >= 0)) invalid.add(els.sconcNumber);
+        if (!(k >= 0)) invalid.add(els.kNumber);
+      }
+    }
+    if (results.errors.includes('errorCfGteC0')) invalid.add(els.cfNumber);
+    if (results.errors.includes('errorNegativeWater')) invalid.add(els.sconcNumber);
+  }
+  [els.v0Number, els.c0Number, els.cfNumber, els.sconcNumber, els.kNumber].forEach((el) => {
+    if (invalid.has(el)) {
+      el.setAttribute('aria-invalid', 'true');
+      el.setAttribute('aria-describedby', 'errorBox');
+    } else {
+      el.removeAttribute('aria-invalid');
+      el.removeAttribute('aria-describedby');
+    }
+  });
+}
+
+function announceResults(results) {
+  clearTimeout(liveTimer);
+  if (!liveReady) return;
+  let message = `${t('resultsTitle')} : ${t('historyWaterLabel')} ${formatLiters(results.Ve)}`;
+  if (currentPreset !== 'eaudevie') {
+    message += `, ${t('historySugarLabel')} ${formatMass(results.ms)}`;
+  }
+  liveTimer = setTimeout(() => {
+    els.liveRegion.textContent = message;
+  }, 700);
+}
+
 function renderResults(results) {
   if (!results.feasible) {
     els.resultWater.textContent = '—';
@@ -205,6 +246,7 @@ function renderResults(results) {
   els.resultExpansion.textContent = formatLiters(results.expansion);
   els.stickyWaterValue.textContent = `${results.Ve.toFixed(2)} ${t('unitL')}`;
   els.stickySugarValue.textContent = `${results.ms.toFixed(1)} g`;
+  announceResults(results);
 }
 
 function compute({ recordHistory } = { recordHistory: false }) {
@@ -226,6 +268,7 @@ function compute({ recordHistory } = { recordHistory: false }) {
   const results = calculateDilution(v0, input.c0, input.cf, sconc, kLg);
   lastResults = results;
   renderResults(results);
+  markInvalidFields(results, { v0, c0: input.c0, cf: input.cf, sconc, k: kLg });
 
   if (els.formulaSection.open) {
     renderFormula(els.formulaContainer, els.formulaSteps, v0, input.c0, input.cf, sconc, kLg, results);
@@ -561,6 +604,9 @@ function initApp() {
   applyTranslations(lang);
   renderHistory();
   compute({ recordHistory: false });
+  setTimeout(() => {
+    liveReady = true;
+  }, 0);
 
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {

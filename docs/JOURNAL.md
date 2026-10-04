@@ -8,6 +8,18 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-10-04 (suite 11)
+- Fait (étape 2 — annonce des résultats + erreurs visibles) : région `#liveRegion`
+  (`role="status"`, `aria-live="polite"`, classe `.sr-only`) qui annonce « Résultats : Eau … ,
+  Sucre … » 700 ms après le dernier changement (pas d'annonce au chargement, ni sucre en mode
+  eau-de-vie ; `announceResults()` dans `js/app.js`, drapeau `liveReady`). Erreurs : le champ
+  fautif reçoit `aria-invalid="true"` + `aria-describedby="errorBox"` et une bordure rouge
+  (`markInvalidFields()`) — C₁ ≥ C₀ → C₁ ; valeur ≤ 0 ou vide → le(s) champ(s) concerné(s) ;
+  eau négative → champ sucre. La boîte `role="alert"` existante continue d'annoncer le message.
+  Cache PWA bumpé à `alcoocalc-v41`.
+- Testé dans le navigateur : annonce différée et sans doublon au chargement, 3 types d'erreur
+  marqués puis démarqués au retour à une valeur valide, rendu visuel (champ rouge + message).
+
 ## 2026-10-04 (suite 10)
 - Audit accessibilité mesuré dans le navigateur (contrastes, cibles tactiles, attributs ARIA,
   clavier). Constats : aucun texte sous 4,5:1 (vert atténué 4,94:1) ; mais curseurs sans nom
