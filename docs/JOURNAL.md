@@ -8,6 +8,22 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-10-04 (suite 12)
+- Fait (étape 3 — petits points d'accessibilité issus de l'audit) : focus clavier renforcé (règle
+  globale `:focus-visible` = contour vert 2 px, en remplacement des `outline: none` + halo faible) ;
+  bordures des champs numériques, boutons du toggle, FR/EN et `.btn` passées de `--border-color`
+  (1,63:1) à `--terminal-dim` (4,94:1) ; cibles tactiles portées à 44 px (FR/EN, boutons
+  Réinitialiser/Copier, étoile de filtre, ✎ ☆ × de l'historique, champs numériques, toggle,
+  résumés « Avancé » / formule) — seuls les boutons « ? » restent à 28 px (≥ 24 px, seuil WCAG AA) ;
+  `aria-pressed` sur FR/EN (géré dans `applyTranslations`) ; lien d'évitement « Aller au contenu »
+  (`.skip-link`, visible au focus, cible `#main`) ; `prefers-reduced-motion` stoppe le curseur
+  clignotant. Cache PWA bumpé à `alcoocalc-v43`.
+- Testé dans le navigateur : Tab → lien d'évitement visible, Entrée → focus sur `main` ; contraste
+  des bordures 4,94:1 ; plus de cible < 44 px hors boutons « ? » et lien d'évitement masqué ; pas
+  de défilement horizontal à 375 px ; rangée d'historique lisible sur mobile (date sur 2 lignes).
+- À noter (non traité) : sur mobile (375 px) les valeurs des Résultats « 0.81 L (811 mL) » passent
+  à la ligne dans la parenthèse — défaut cosmétique venu du double affichage d'unités.
+
 ## 2026-10-04 (suite 11)
 - Fait (étape 2 — annonce des résultats + erreurs visibles) : région `#liveRegion`
   (`role="status"`, `aria-live="polite"`, classe `.sr-only`) qui annonce « Résultats : Eau … ,

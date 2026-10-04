@@ -15,6 +15,7 @@ const TRANSLATIONS = {
     labelSconc: 'Sucre visé (S)',
     labelK: "Coefficient d'expansion (k)",
     helpBtnLabel: 'Aide',
+    skipToContent: 'Aller au contenu',
     helpPreset: "Eau-de-vie : on dilue simplement avec de l'eau. Liqueur : on dilue et on ajoute du sucre.",
     helpVf: "Volume final souhaité. S'il est rempli, l'app calcule le volume d'alcool de départ nécessaire.",
     helpS: 'Quantité de sucre dissous par litre de produit fini (g/L). 150 g/L donne une liqueur peu sucrée, 300 g/L une liqueur très sucrée.',
@@ -74,6 +75,7 @@ const TRANSLATIONS = {
     labelSconc: 'Target sugar (S)',
     labelK: 'Expansion coefficient (k)',
     helpBtnLabel: 'Help',
+    skipToContent: 'Skip to content',
     helpPreset: 'Spirit: simply dilute with water. Liqueur: dilute and add sugar.',
     helpVf: 'Desired final volume. When filled in, the app works out the starting volume of alcohol needed.',
     helpS: 'Amount of sugar dissolved per litre of finished product (g/L). 150 g/L gives a lightly sweet liqueur, 300 g/L a very sweet one.',
@@ -164,7 +166,9 @@ function applyTranslations(lang) {
     el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria-label'), l));
   });
   document.querySelectorAll('[data-lang-btn]').forEach((el) => {
-    el.classList.toggle('is-active', el.getAttribute('data-lang-btn') === l);
+    const active = el.getAttribute('data-lang-btn') === l;
+    el.classList.toggle('is-active', active);
+    el.setAttribute('aria-pressed', String(active));
   });
   if (typeof onLanguageChanged === 'function') onLanguageChanged(l);
 }
