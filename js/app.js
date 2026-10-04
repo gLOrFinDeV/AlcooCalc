@@ -15,11 +15,13 @@ const DEFAULTS = {
 const STORAGE_KEY_INPUTS = 'alcoocalc_inputs';
 const STORAGE_KEY_HISTORY = 'alcoocalc_history';
 const MAX_HISTORY = 10;
+const MAX_NAME_LENGTH = 40;
 
 const els = {};
 let lastResults = null;
 let favoritesFilterActive = false;
 let currentPreset = 'custom';
+let editingHistoryIndex = null;
 
 function $(id) {
   return document.getElementById(id);
@@ -252,7 +254,9 @@ function pushHistory(input, results) {
     expansion: results.expansion,
     favorite: false,
   });
-  saveHistory(history.slice(0, MAX_HISTORY));
+  // les favoris sont conservés sans limite ; seul l'historique "courant" est plafonné
+  let kept = 0;
+  saveHistory(history.filter((entry) => entry.favorite || ++kept <= MAX_HISTORY));
   renderHistory();
 }
 
@@ -262,6 +266,15 @@ function toggleFavorite(index) {
   history[index].favorite = !history[index].favorite;
   saveHistory(history);
   renderHistory();
+}
+
+function renameHistoryEntry(index, rawName) {
+  const history = loadHistory();
+  if (!history[index]) return;
+  const name = rawName.trim().slice(0, MAX_NAME_LENGTH);
+  history[index].name = name;
+  if (name) history[index].favorite = true;
+  saveHistory(history);
 }
 
 function setFavoritesFilter(active) {
@@ -323,11 +336,54 @@ function renderHistory() {
     main.className = 'history-row__main';
     main.setAttribute('aria-label', t('historyReloadLabel'));
     main.innerHTML = `
+      <span class="history-row__name" hidden></span>
       <span class="history-row__date">${d.toLocaleString()}</span>
       <span class="history-row__spec">${entry.v0.toFixed(2)}${t('unitL')} · ${entry.c0}${t('unitPercent')} → ${entry.cf}${t('unitPercent')}</span>
       <span class="history-row__result">${t('historyWaterLabel')}: ${entry.ve.toFixed(2)}${t('unitL')}${entry.sconc > 0 ? ` · ${t('historySugarLabel')}: ${entry.ms.toFixed(1)}g` : ''}</span>
     `;
     main.addEventListener('click', () => loadHistoryEntry(entry));
+    if (entry.name) {
+      const nameEl = main.querySelector('.history-row__name');
+      nameEl.textContent = entry.name;
+      nameEl.hidden = false;
+    }
+
+    const edit = document.createElement('button');
+    edit.type = 'button';
+    edit.className = 'history-row__edit';
+    edit.setAttribute('aria-label', t('historyRenameLabel'));
+    edit.textContent = '✎';
+    edit.addEventListener('click', (event) => {
+      event.stopPropagation();
+      editingHistoryIndex = index;
+      renderHistory();
+    });
+
+    let first = main;
+    if (editingHistoryIndex === index) {
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.className = 'history-row__name-input';
+      input.maxLength = MAX_NAME_LENGTH;
+      input.value = entry.name || '';
+      input.placeholder = t('historyNamePlaceholder');
+      input.setAttribute('aria-label', t('historyRenameLabel'));
+      let finished = false;
+      const finish = (save) => {
+        if (finished) return;
+        finished = true;
+        editingHistoryIndex = null;
+        if (save) renameHistoryEntry(index, input.value);
+        renderHistory();
+      };
+      input.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') finish(true);
+        else if (event.key === 'Escape') finish(false);
+      });
+      input.addEventListener('blur', () => finish(true));
+      first = input;
+      setTimeout(() => input.focus(), 0);
+    }
 
     const fav = document.createElement('button');
     fav.type = 'button';
@@ -350,7 +406,8 @@ function renderHistory() {
       deleteHistoryEntry(index);
     });
 
-    row.appendChild(main);
+    row.appendChild(first);
+    row.appendChild(edit);
     row.appendChild(fav);
     row.appendChild(del);
     els.historyList.appendChild(row);

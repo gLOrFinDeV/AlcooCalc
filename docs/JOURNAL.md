@@ -8,6 +8,20 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-10-04 (suite 3)
+- Décidé (avec l'utilisateur) : la limite de 10 entrées (`MAX_HISTORY`, héritée du cahier des
+  charges v1 sans justification technique) ne s'applique plus qu'à l'historique "courant" ; les
+  **favoris sont conservés sans limite** (exclus du plafond dans `pushHistory()`, qui ne purge qu'à
+  l'ajout d'une entrée — retirer une étoile ne supprime rien sur le coup).
+- Fait : **nom de recette** dans l'historique. Bouton ✎ par ligne → champ texte en ligne (Entrée ou
+  perte de focus = enregistre, Échap = annule, 40 caractères max). Un nom non vide active
+  automatiquement l'étoile ; vider le nom laisse l'étoile telle quelle. Le nom s'affiche en gras
+  vert au-dessus de la date (inséré via `textContent`, pas d'injection HTML). Champ `name` sur
+  l'entrée, persisté dans `alcoocalc_history`. i18n FR/EN (`historyRenameLabel`,
+  `historyNamePlaceholder`). Cache PWA bumpé à `alcoocalc-v35`.
+- Testé dans le navigateur : saisie/validation/annulation, étoile auto, nom contenant du HTML rendu
+  en texte brut, et 12 ajouts successifs → le favori nommé survit (1 favori + 10 courants = 11).
+
 ## 2026-10-04 (suite 2)
 - Fait : libellé anglais du preset `eaudevie` changé de "Fruit brandy" en "Spirit"
   (`js/translations.js`). Cache PWA bumpé à `alcoocalc-v34`. Vérifié en EN : "Spirit / Liqueur".

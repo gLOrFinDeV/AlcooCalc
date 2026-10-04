@@ -617,6 +617,48 @@ input[type='range']::-moz-range-thumb {
   text-shadow: 0 0 6px rgba(0, 204, 82, 0.6);
 }
 
+.history-row__edit {
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  color: var(--terminal-dim);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0 0.6rem;
+  cursor: pointer;
+}
+
+.history-row__edit:hover,
+.history-row__edit:focus-visible {
+  color: var(--terminal-green);
+  outline: none;
+}
+
+.history-row__name {
+  display: block;
+  color: var(--terminal-green);
+  font-weight: bold;
+  overflow-wrap: anywhere;
+}
+
+.history-row__name-input {
+  flex: 1;
+  min-width: 0;
+  background: var(--bg-primary);
+  border: 1px solid var(--terminal-green);
+  color: var(--terminal-green);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  padding: 0.4rem 0.6rem;
+  margin: 0.3rem 0 0.3rem 0.3rem;
+}
+
+.history-row__name-input:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(0, 204, 82, 0.3);
+}
+
 .history-row__date {
   color: var(--terminal-dim);
 }
