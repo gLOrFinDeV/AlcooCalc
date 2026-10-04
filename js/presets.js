@@ -6,7 +6,7 @@
  */
 const SPIRIT_PRESETS = {
   eaudevie: { c0: 86, cf: 45 },
-  liqueur: { c0: 96, cf: 20 },
+  liqueur: { c0: 96, cf: 30 },
 };
 
 function applyPreset(key) {

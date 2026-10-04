@@ -1,16 +1,28 @@
 'use strict';
 
+// Valeurs de première ouverture, en métrique (comme tout l'état interne).
 const DEFAULTS = {
   v0: 1.0,
   vfTarget: null, // optionnel : si renseigné, remplace V0 dans le calcul
-  c0: 50,
+  c0: 96,
   cf: 30,
-  sconc: 150,
+  sconc: 200,
   k: 0.63, // mL/g (affichage) ; converti en L/g avant tout calcul
-  preset: 'custom',
+  preset: 'liqueur',
   advancedOpen: false,
   formulaOpen: false,
 };
+
+// En US, les valeurs par défaut sont des nombres ronds dans les unités US (pas la conversion exacte).
+const US_DEFAULT_DISPLAY = { v0: 24, sconc: 30 }; // fl oz, oz/gal
+
+function defaultsFor(system) {
+  if (system !== 'us') return Object.assign({}, DEFAULTS);
+  return Object.assign({}, DEFAULTS, {
+    v0: FIELD_SPECS.v0.fromUs(US_DEFAULT_DISPLAY.v0),
+    sconc: FIELD_SPECS.sconc.fromUs(US_DEFAULT_DISPLAY.sconc),
+  });
+}
 
 const STORAGE_KEY_INPUTS = 'alcoocalc_inputs';
 const STORAGE_KEY_HISTORY = 'alcoocalc_history';
@@ -223,6 +235,14 @@ function configureFieldsForUnits() {
 function setUnitSystem(system) {
   if (!UNIT_SYSTEMS.includes(system) || system === unitSystem) return;
   const state = readInputsFromForm(); // lu avec l'ancien système, converti en métrique
+  const old = defaultsFor(unitSystem);
+  const untouched = (a, b) => Math.abs(a - b) < 1e-9;
+  if (untouched(state.v0, old.v0) && untouched(state.sconc, old.sconc)) {
+    // volume et sucre encore à leurs valeurs par défaut : on propose celles du nouveau système
+    const fresh = defaultsFor(system);
+    state.v0 = fresh.v0;
+    state.sconc = fresh.sconc;
+  }
   unitSystem = system;
   saveUnitSystem(system);
   configureFieldsForUnits();
@@ -541,7 +561,7 @@ function copyResults() {
 }
 
 function resetToDefaults() {
-  applyInputsToForm(DEFAULTS);
+  applyInputsToForm(defaultsFor(unitSystem));
   compute({ recordHistory: false });
 }
 

@@ -8,6 +8,23 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-10-04 (suite 15) — branche `v2.1`
+- Fait : **valeurs par défaut de première ouverture**, définies par l'utilisateur : langue EN,
+  unités Metric, Alcool de base Liqueur, V₀ = 1 L, C₀ = 96 %, C₁ = 30 %, S = 200 g/L
+  (`DEFAULTS` dans `js/app.js`, `DEFAULT_LANG = 'en'` dans `js/translations.js`, `<html lang>` et
+  `<title>` passés en anglais ; `applyTranslations()` met maintenant aussi `document.title` à jour).
+  En US, les défauts sont des nombres ronds, pas la conversion exacte : **24 fl oz** et **30 oz/gal**
+  (`defaultsFor()`, `US_DEFAULT_DISPLAY`) ; basculer metric ↔ US avec V₀ et S encore à leurs valeurs
+  par défaut propose donc ceux du nouveau système, sinon la conversion reste exacte. « Reset » applique
+  les défauts du système courant.
+- Décidé au passage : le preset **Liqueur** passe de 96 → 20 % à **96 → 30 %** (`js/presets.js`), pour
+  qu'un clic sur Liqueur redonne les valeurs par défaut. Cache PWA bumpé à `alcoocalc-v46`.
+- Testé dans le navigateur (stockage vidé = première ouverture) : EN / Metric / Liqueur, 1 L, 96/30,
+  200 g/L (→ 1,80 L d'eau, 0,64 kg de sucre) ; bascule US = 24 fl oz / 30 oz/gal ; retour métrique
+  exact ; volume modifié (2 L) → conversion exacte (67,6 fl oz) ; Reset en US = 24 / 30.
+- Note : ces défauts ne s'appliquent qu'aux nouveaux visiteurs ; un navigateur qui a déjà des valeurs
+  enregistrées les conserve (bouton Reset pour repartir des défauts).
+
 ## 2026-10-04 (suite 14) — branche `v2.1`
 - Décidé (ADR 0005) : unités **métrique et US seulement** (UK écarté), calcul/historique/sauvegarde
   toujours en métrique, conversion à la saisie et à l'affichage.

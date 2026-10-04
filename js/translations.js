@@ -146,7 +146,7 @@ const TRANSLATIONS = {
 };
 
 const SUPPORTED_LANGS = Object.keys(TRANSLATIONS);
-const DEFAULT_LANG = 'fr';
+const DEFAULT_LANG = 'en';
 
 function getLanguage() {
   try {
@@ -176,6 +176,7 @@ function setLanguage(lang) {
 function applyTranslations(lang) {
   const l = lang || getLanguage();
   document.documentElement.lang = l;
+  document.title = `${t('appTitle', l)} — ${t('appSubtitle', l)}`;
   document.querySelectorAll('[data-i18n]').forEach((el) => {
     const key = el.getAttribute('data-i18n');
     el.textContent = t(key, l);
