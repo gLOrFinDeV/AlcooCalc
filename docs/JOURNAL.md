@@ -8,6 +8,26 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-10-04 (suite 14) — branche `v2.1`
+- Décidé (ADR 0005) : unités **métrique et US seulement** (UK écarté), calcul/historique/sauvegarde
+  toujours en métrique, conversion à la saisie et à l'affichage.
+- Fait : (1) nouvelle carte **Réglages** en haut (maquette B choisie par l'utilisateur) : Langue en
+  premier, Unités, Alcool de base ; FR/EN retiré de l'en-tête ; classes `.seg` / `.seg-btn`
+  partagées par les trois toggles (remplacent `.lang-btn` / `.preset-btn`) ; sur desktop la carte
+  occupe toute la largeur (trois colonnes), Paramètres/Résultats dessous, Historique en pleine
+  largeur. (2) `js/units.js` (nouveau, ajouté au précache) : `FIELD_SPECS` (min/max/step/décimales +
+  conversions par champ), formateurs `formatVolume/Mass(+Short)`, `formatSugarConc`. (3) `js/app.js` :
+  `readInputsFromForm()` renvoie toujours du métrique, `applyInputsToForm()` affiche dans le
+  système courant, `setUnitSystem()` / `configureFieldsForUnits()` (attributs des champs, libellés
+  d'unités via `data-i18n-metric` / `data-i18n-us`, aide S et k adaptée) ; `exactValues` évite toute
+  dérive d'arrondi en basculant. (4) Formule détaillée en gal / oz / oz·gal⁻¹ / gal·oz⁻¹ (US) ;
+  texte copié, historique et résumé collant suivent le système. Cache PWA bumpé à `alcoocalc-v45`.
+- Testé dans le navigateur : bascule aller-retour sans changement de résultat (0,51 L ↔ 17,2 fl oz),
+  saisie directe en US (25 fl oz → 0,73934 L stocké), historique et copie en US, formule KaTeX sans
+  erreur dans les deux systèmes, libellés FR/EN, mise en page desktop (1100 px) et mobile.
+- À noter : une erreur d'échappement des `\` LaTeX (outil d'édition) a été corrigée en cours de route
+  dans `js/formulas.js` — la formule s'affichait en rouge avant correction.
+
 ## 2026-10-04 (suite 13)
 - Fait : ROADMAP mise à jour (v2 passée en « Livrée », nouvelle section v2.1 « Unités impériales »,
   question sur la portée de l'historique retirée car tranchée : 10 entrées courantes + favoris

@@ -21,6 +21,8 @@ const els = {};
 let lastResults = null;
 let favoritesFilterActive = false;
 let currentPreset = 'custom';
+let unitSystem = 'metric';
+const exactValues = {};
 let editingHistoryIndex = null;
 let liveTimer = null;
 let liveReady = false;
@@ -30,7 +32,7 @@ function $(id) {
 }
 
 function cacheEls() {
-  els.presetButtons = document.querySelectorAll('.preset-btn');
+  els.presetButtons = document.querySelectorAll('[data-preset]');
   els.v0Field = $('v0Field');
   els.v0Range = $('v0Range');
   els.v0Number = $('v0Number');
@@ -64,6 +66,7 @@ function cacheEls() {
   els.btnClearHistory = $('btnClearHistory');
   els.btnFavoriteFilter = $('btnFavoriteFilter');
   els.langButtons = document.querySelectorAll('[data-lang-btn]');
+  els.unitButtons = document.querySelectorAll('[data-unit-btn]');
 }
 
 function loadInputs() {
@@ -112,14 +115,22 @@ function setPreset(key) {
   });
 }
 
+// Le formulaire affiche le système d'unités courant ; tout ce qui en sort est en métrique.
 function readInputsFromForm() {
+  const metric = (field, el) => {
+    const shown = parseFloat(el.value);
+    const exact = exactValues[field];
+    // valeur métrique d'origine tant que l'utilisateur n'a pas modifié le champ affiché (arrondi)
+    if (Number.isFinite(exact) && toDisplayValue(field, exact, unitSystem) === shown) return exact;
+    return fromDisplayValue(field, shown, unitSystem);
+  };
   return {
-    v0: parseFloat(els.v0Number.value),
-    vfTarget: parseFloat(els.vfTargetNumber.value),
+    v0: metric('v0', els.v0Number),
+    vfTarget: metric('vfTarget', els.vfTargetNumber),
     c0: parseFloat(els.c0Number.value),
     cf: parseFloat(els.cfNumber.value),
-    sconc: parseFloat(els.sconcNumber.value),
-    k: parseFloat(els.kNumber.value),
+    sconc: metric('sconc', els.sconcNumber),
+    k: metric('k', els.kNumber),
     preset: currentPreset,
     advancedOpen: els.advancedSection.open,
     formulaOpen: els.formulaSection.open,
@@ -127,20 +138,22 @@ function readInputsFromForm() {
 }
 
 function applyInputsToForm(state) {
-  els.v0Range.value = state.v0;
-  els.v0Number.value = state.v0;
-  els.vfTargetNumber.value = Number.isFinite(state.vfTarget) ? state.vfTarget : '';
+  const shown = (field, value) => toDisplayValue(field, value, unitSystem);
+  Object.assign(exactValues, { v0: state.v0, vfTarget: state.vfTarget, sconc: state.sconc, k: state.k });
+  els.v0Range.value = shown('v0', state.v0);
+  els.v0Number.value = shown('v0', state.v0);
+  els.vfTargetNumber.value = Number.isFinite(state.vfTarget) ? shown('vfTarget', state.vfTarget) : '';
   if (Number.isFinite(state.vfTarget)) {
-    els.vfTargetRange.value = state.vfTarget;
+    els.vfTargetRange.value = shown('vfTarget', state.vfTarget);
   }
   els.c0Range.value = state.c0;
   els.c0Number.value = state.c0;
   els.cfRange.value = state.cf;
   els.cfNumber.value = state.cf;
-  els.sconcRange.value = state.sconc;
-  els.sconcNumber.value = state.sconc;
-  els.kRange.value = state.k;
-  els.kNumber.value = state.k;
+  els.sconcRange.value = shown('sconc', state.sconc);
+  els.sconcNumber.value = shown('sconc', state.sconc);
+  els.kRange.value = shown('k', state.k);
+  els.kNumber.value = shown('k', state.k);
   setPreset(state.preset);
   els.advancedSection.open = !!state.advancedOpen;
   els.formulaSection.open = !!state.formulaOpen;
@@ -182,12 +195,39 @@ function showErrors(errorKeys) {
   els.errorBox.textContent = errorKeys.map((k) => t(k)).join(' ');
 }
 
-function formatLiters(value) {
-  return `${value.toFixed(2)} ${t('unitL')} (${(value * 1000).toFixed(0)} mL)`;
+function configureFieldsForUnits() {
+  const fields = [
+    ['v0', els.v0Range, els.v0Number],
+    ['vfTarget', els.vfTargetRange, els.vfTargetNumber],
+    ['sconc', els.sconcRange, els.sconcNumber],
+    ['k', els.kRange, els.kNumber],
+  ];
+  fields.forEach(([field, rangeEl, numberEl]) => {
+    const { min, max, step } = FIELD_SPECS[field][unitSystem];
+    [rangeEl, numberEl].forEach((el) => {
+      el.min = min;
+      el.max = max;
+      el.step = step;
+    });
+  });
+  document.querySelectorAll('[data-i18n-metric]').forEach((el) => {
+    el.setAttribute('data-i18n', el.getAttribute(unitSystem === 'us' ? 'data-i18n-us' : 'data-i18n-metric'));
+  });
+  els.unitButtons.forEach((btn) => {
+    const active = btn.dataset.unitBtn === unitSystem;
+    btn.classList.toggle('is-active', active);
+    btn.setAttribute('aria-pressed', String(active));
+  });
 }
 
-function formatMass(valueGrams) {
-  return `${(valueGrams / 1000).toFixed(2)} kg (${valueGrams.toFixed(0)} g)`;
+function setUnitSystem(system) {
+  if (!UNIT_SYSTEMS.includes(system) || system === unitSystem) return;
+  const state = readInputsFromForm(); // lu avec l'ancien système, converti en métrique
+  unitSystem = system;
+  saveUnitSystem(system);
+  configureFieldsForUnits();
+  applyInputsToForm(state);
+  applyTranslations(getLanguage());
 }
 
 function markInvalidFields(results, { v0, c0, cf, sconc, k }) {
@@ -219,9 +259,9 @@ function markInvalidFields(results, { v0, c0, cf, sconc, k }) {
 function announceResults(results) {
   clearTimeout(liveTimer);
   if (!liveReady) return;
-  let message = `${t('resultsTitle')} : ${t('historyWaterLabel')} ${formatLiters(results.Ve)}`;
+  let message = `${t('resultsTitle')} : ${t('historyWaterLabel')} ${formatVolume(results.Ve, unitSystem)}`;
   if (currentPreset !== 'eaudevie') {
-    message += `, ${t('historySugarLabel')} ${formatMass(results.ms)}`;
+    message += `, ${t('historySugarLabel')} ${formatMass(results.ms, unitSystem)}`;
   }
   liveTimer = setTimeout(() => {
     els.liveRegion.textContent = message;
@@ -240,12 +280,12 @@ function renderResults(results) {
     return;
   }
   showErrors(null);
-  els.resultWater.textContent = formatLiters(results.Ve);
-  els.resultSugar.textContent = formatMass(results.ms);
-  els.resultFinalVolume.textContent = formatLiters(results.Vf);
-  els.resultExpansion.textContent = formatLiters(results.expansion);
-  els.stickyWaterValue.textContent = `${results.Ve.toFixed(2)} ${t('unitL')}`;
-  els.stickySugarValue.textContent = `${results.ms.toFixed(1)} g`;
+  els.resultWater.textContent = formatVolume(results.Ve, unitSystem);
+  els.resultSugar.textContent = formatMass(results.ms, unitSystem);
+  els.resultFinalVolume.textContent = formatVolume(results.Vf, unitSystem);
+  els.resultExpansion.textContent = formatVolume(results.expansion, unitSystem);
+  els.stickyWaterValue.textContent = formatVolumeShort(results.Ve, unitSystem);
+  els.stickySugarValue.textContent = formatMassShort(results.ms, unitSystem);
   announceResults(results);
 }
 
@@ -257,8 +297,9 @@ function compute({ recordHistory } = { recordHistory: false }) {
   let v0 = input.v0;
   if (vfTargetActive) {
     v0 = (input.vfTarget * input.cf) / input.c0;
-    els.v0Number.value = v0.toFixed(3);
-    els.v0Range.value = Math.min(Math.max(v0, Number(els.v0Range.min)), Number(els.v0Range.max));
+    const shownV0 = unitSystem === 'us' ? FIELD_SPECS.v0.toUs(v0) : v0;
+    els.v0Number.value = shownV0.toFixed(unitSystem === 'us' ? 2 : 3);
+    els.v0Range.value = Math.min(Math.max(shownV0, Number(els.v0Range.min)), Number(els.v0Range.max));
   }
   els.v0Number.disabled = vfTargetActive;
   els.v0Range.disabled = vfTargetActive;
@@ -271,7 +312,7 @@ function compute({ recordHistory } = { recordHistory: false }) {
   markInvalidFields(results, { v0, c0: input.c0, cf: input.cf, sconc, k: kLg });
 
   if (els.formulaSection.open) {
-    renderFormula(els.formulaContainer, els.formulaSteps, v0, input.c0, input.cf, sconc, kLg, results);
+    renderFormula(els.formulaContainer, els.formulaSteps, v0, input.c0, input.cf, sconc, kLg, results, unitSystem);
   }
 
   saveInputs(Object.assign({}, input, { v0 }));
@@ -338,7 +379,7 @@ function loadHistoryEntry(entry) {
     c0: entry.c0,
     cf: entry.cf,
     // une entrée sans sucre revient en mode "eau-de-vie" ; le sucre saisi est conservé
-    sconc: entry.sconc > 0 ? entry.sconc : parseFloat(els.sconcNumber.value),
+    sconc: entry.sconc > 0 ? entry.sconc : readInputsFromForm().sconc,
     k: entry.k * 1000, // stocké en L/g dans l'historique, le champ affiche du mL/g
     preset: entry.sconc > 0 ? 'custom' : 'eaudevie',
     advancedOpen: els.advancedSection.open,
@@ -381,8 +422,8 @@ function renderHistory() {
     main.innerHTML = `
       <span class="history-row__name" hidden></span>
       <span class="history-row__date">${d.toLocaleString()}</span>
-      <span class="history-row__spec">${entry.v0.toFixed(2)}${t('unitL')} · ${entry.c0}${t('unitPercent')} → ${entry.cf}${t('unitPercent')}</span>
-      <span class="history-row__result">${t('historyWaterLabel')}: ${entry.ve.toFixed(2)}${t('unitL')}${entry.sconc > 0 ? ` · ${t('historySugarLabel')}: ${entry.ms.toFixed(1)}g` : ''}</span>
+      <span class="history-row__spec">${formatVolumeShort(entry.v0, unitSystem)} · ${entry.c0}${t('unitPercent')} → ${entry.cf}${t('unitPercent')}</span>
+      <span class="history-row__result">${t('historyWaterLabel')}: ${formatVolumeShort(entry.ve, unitSystem)}${entry.sconc > 0 ? ` · ${t('historySugarLabel')}: ${formatMassShort(entry.ms, unitSystem)}` : ''}</span>
     `;
     main.addEventListener('click', () => loadHistoryEntry(entry));
     if (entry.name) {
@@ -463,14 +504,14 @@ function copyResults() {
   const noSugar = currentPreset === 'eaudevie';
   const text = t(noSugar ? 'copyTemplateNoSugar' : 'copyTemplate')
     .replace('{date}', new Date().toLocaleString())
-    .replace('{v0}', input.v0)
+    .replace('{v0}', formatVolumeShort(input.v0, unitSystem))
     .replace('{c0}', input.c0)
     .replace('{cf}', input.cf)
-    .replace('{sconc}', input.sconc)
-    .replace('{ve}', formatLiters(lastResults.Ve))
-    .replace('{ms}', lastResults.ms.toFixed(1))
-    .replace('{vf}', lastResults.Vf.toFixed(2))
-    .replace('{exp}', (lastResults.expansion * 1000).toFixed(1));
+    .replace('{sconc}', formatSugarConc(input.sconc, unitSystem))
+    .replace('{ve}', formatVolume(lastResults.Ve, unitSystem))
+    .replace('{ms}', formatMass(lastResults.ms, unitSystem))
+    .replace('{vf}', formatVolume(lastResults.Vf, unitSystem))
+    .replace('{exp}', formatVolume(lastResults.expansion, unitSystem));
 
   const feedback = () => {
     els.copyFeedback.textContent = t('copiedMsg');
@@ -592,6 +633,9 @@ function wireEvents() {
   els.langButtons.forEach((btn) => {
     btn.addEventListener('click', () => setLanguage(btn.getAttribute('data-lang-btn')));
   });
+  els.unitButtons.forEach((btn) => {
+    btn.addEventListener('click', () => setUnitSystem(btn.dataset.unitBtn));
+  });
 }
 
 function initApp() {
@@ -599,6 +643,8 @@ function initApp() {
   const lang = getLanguage();
   const savedInputs = loadInputs();
 
+  unitSystem = getUnitSystem();
+  configureFieldsForUnits();
   applyInputsToForm(savedInputs);
   wireEvents();
   applyTranslations(lang);

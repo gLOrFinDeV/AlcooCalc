@@ -62,8 +62,11 @@ tags: [roadmap]
   [0004](decisions/0004-licence-polyform-noncommercial.md)), README (licence, KaTeX, contribution,
   auteur), pied de page « code source ouvert ».
 
-## 🔜 v2.1 — Unités impériales (US) (en cours, branche `v2.1`)
-- Toggle **metric / imperial** : saisie et résultats en unités US (gallons/fl oz, livres/onces)
-  en plus du métrique ; calcul interne inchangé (métrique), conversion à l'affichage/saisie.
-- Questions à trancher : unités affichées (fl oz, pt, qt, gal ; oz, lb), arrondis, sucre en g/L →
-  équivalent US (oz/gal), coefficient k, conversion de l'historique, persistance du choix.
+## 🚧 v2.1 — Unités métriques / US (branche `v2.1`, implémentée, à merger)
+- ✅ Carte **Réglages** en haut de l'app avec trois toggles : **Langue** (FR/EN, en premier),
+  **Unités** (Métrique/US) et **Alcool de base** (Eau-de-vie/Liqueur) ; FR/EN quitte l'en-tête.
+- ✅ **Unités US** (ADR [0005](decisions/0005-unites-metrique-us.md)) : volumes en fl oz (gal), masses
+  en oz (lb), sucre en oz/gal, k en fl oz/oz ; formule détaillée en gal/oz ; historique, résumé
+  collant, texte copié et textes d'aide suivent le système choisi. Calcul interne et sauvegarde
+  restent en métrique ; choix mémorisé. Unités impériales britanniques écartées.
+- À faire : test sur appareil réel, puis merge dans `main` sur feu vert.

@@ -18,7 +18,7 @@ tenant compte de l'expansion de volume causée par le sucre dissous.
 - Historique cliquable : recharger un calcul, le nommer (ce qui en fait un favori), filtrer sur les
   favoris. Les favoris sont conservés sans limite, l'historique courant est plafonné à 10 entrées
 - Données et préférences sauvegardées localement (`localStorage`) — rien n'est envoyé
-- Bilingue FR/EN
+- Bilingue FR/EN, et deux systèmes d'unités au choix : **métrique** ou **US** (fl oz, gal, oz, lb)
 - Thème "terminal mainframe" (vert sur fond noir), responsive mobile-first
 - PWA installable, fonctionne hors-ligne (service worker)
 

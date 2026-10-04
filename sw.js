@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE_NAME = 'alcoocalc-v43';
+const CACHE_NAME = 'alcoocalc-v45';
 
 const CORE_ASSETS = [
   './',
@@ -11,6 +11,7 @@ const CORE_ASSETS = [
   './js/formulas.js',
   './js/presets.js',
   './js/translations.js',
+  './js/units.js',
   './js/katex/katex.min.js',
   './js/katex/katex.min.css',
   './manifest.json',

@@ -46,19 +46,55 @@ function calculateDilution(V0, C0, Cf, S_conc, k) {
   return { feasible: true, errors: [], Vf, ms, expansion, Ve };
 }
 
-function generateFormulaSteps(V0, C0, Cf, S_conc, k, results) {
+
+// Unités affichées dans la formule détaillée : volumes en L ou gal, masses en g ou oz,
+// S en g/L ou oz/gal, k en L/g ou gal/oz (système cohérent, les calculs restent identiques).
+function formulaUnits(system) {
+  if (system === 'us') {
+    return {
+      vol: (liters) => liters / L_PER_GAL,
+      volUnit: 'gal',
+      volDec: 4,
+      mass: (grams) => grams / G_PER_OZ,
+      massUnit: 'oz',
+      massDec: 2,
+      conc: (gPerL) => (gPerL * L_PER_GAL) / G_PER_OZ,
+      concDec: 2,
+      coef: (lPerG) => (lPerG * G_PER_OZ) / L_PER_GAL,
+      small: (liters) => `${((liters / L_PER_GAL) * FLOZ_PER_GAL).toFixed(1)}\\ \\text{fl oz}`,
+    };
+  }
+  return {
+    vol: (liters) => liters,
+    volUnit: 'L',
+    volDec: 3,
+    mass: (grams) => grams,
+    massUnit: 'g',
+    massDec: 1,
+    conc: (gPerL) => gPerL,
+    concDec: 1,
+    coef: (lPerG) => lPerG,
+    small: (liters) => `${(liters * 1000).toFixed(1)}\\ \\text{mL}`,
+  };
+}
+
+function generateFormulaSteps(V0, C0, Cf, S_conc, k, results, system) {
+  const u = formulaUnits(system);
   const fmt = (n, d = 3) => Number(n).toFixed(d);
+  const vol = (liters) => fmt(u.vol(liters), u.volDec);
+  const mass = (grams) => fmt(u.mass(grams), u.massDec);
+  const unitV = `\\ \\text{${u.volUnit}}`;
   const dV = '\\Delta V_s';
   const step1 = {
     tex: 'V_1 = \\dfrac{V_0 \\cdot C_0}{C_1}',
-    substituted: `V_1 = \\dfrac{${fmt(V0)} \\times ${fmt(C0, 1)}}{${fmt(Cf, 1)}} = ${fmt(results.Vf)}\\ \\text{L}`,
+    substituted: `V_1 = \\dfrac{${vol(V0)} \\times ${fmt(C0, 1)}}{${fmt(Cf, 1)}} = ${vol(results.Vf)}${unitV}`,
   };
   if (!(S_conc > 0)) {
     return [
       step1,
       {
         tex: 'V_e = V_1 - V_0',
-        substituted: `V_e = ${fmt(results.Vf)} - ${fmt(V0)} = ${fmt(results.Ve)}\\ \\text{L}`,
+        substituted: `V_e = ${vol(results.Vf)} - ${vol(V0)} = ${vol(results.Ve)}${unitV}`,
       },
     ];
   }
@@ -66,20 +102,20 @@ function generateFormulaSteps(V0, C0, Cf, S_conc, k, results) {
     step1,
     {
       tex: 'm_s = S \\cdot V_1',
-      substituted: `m_s = ${fmt(S_conc, 1)} \\times ${fmt(results.Vf)} = ${fmt(results.ms, 1)}\\ \\text{g}`,
+      substituted: `m_s = ${fmt(u.conc(S_conc), u.concDec)} \\times ${vol(results.Vf)} = ${mass(results.ms)}\\ \\text{${u.massUnit}}`,
     },
     {
       tex: `${dV} = k \\cdot m_s`,
-      substituted: `${dV} = ${fmt(k, 5)} \\times ${fmt(results.ms, 1)} = ${fmt(results.expansion)}\\ \\text{L} = ${fmt(results.expansion * 1000, 1)}\\ \\text{mL}`,
+      substituted: `${dV} = ${fmt(u.coef(k), 5)} \\times ${mass(results.ms)} = ${vol(results.expansion)}${unitV} = ${u.small(results.expansion)}`,
     },
     {
       tex: `V_e = V_1 - V_0 - ${dV}`,
-      substituted: `V_e = ${fmt(results.Vf)} - ${fmt(V0)} - ${fmt(results.expansion)} = ${fmt(results.Ve)}\\ \\text{L}`,
+      substituted: `V_e = ${vol(results.Vf)} - ${vol(V0)} - ${vol(results.expansion)} = ${vol(results.Ve)}${unitV}`,
     },
   ];
 }
 
-function renderFormula(containerEl, stepsContainerEl, V0, C0, Cf, S_conc, k, results) {
+function renderFormula(containerEl, stepsContainerEl, V0, C0, Cf, S_conc, k, results, system) {
   if (typeof katex === 'undefined') return;
 
   const dV = '\\Delta V_s';
@@ -92,7 +128,7 @@ function renderFormula(containerEl, stepsContainerEl, V0, C0, Cf, S_conc, k, res
   stepsContainerEl.innerHTML = '';
   if (!results.feasible && !Number.isFinite(results.Vf)) return;
 
-  const steps = generateFormulaSteps(V0, C0, Cf, S_conc, k, results);
+  const steps = generateFormulaSteps(V0, C0, Cf, S_conc, k, results, system);
   steps.forEach((step, i) => {
     const line = document.createElement('div');
     line.className = 'formula-step';
