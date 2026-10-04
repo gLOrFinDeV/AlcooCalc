@@ -145,6 +145,37 @@ body.app-ready .app-content {
   border-color: var(--terminal-green);
 }
 
+.preset-toggle {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.preset-btn {
+  flex: 1;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  color: var(--terminal-dim);
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  padding: 0.6rem 0.8rem;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+}
+
+.preset-btn:hover,
+.preset-btn:focus-visible {
+  border-color: var(--terminal-green);
+  color: var(--terminal-green);
+  box-shadow: 0 0 8px rgba(0, 204, 82, 0.3);
+  outline: none;
+}
+
+.preset-btn.is-active {
+  background: var(--terminal-green);
+  color: #000;
+  border-color: var(--terminal-green);
+}
+
 .app-main {
   max-width: 640px;
   margin: 0 auto;

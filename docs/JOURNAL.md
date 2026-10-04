@@ -8,6 +8,19 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-10-04
+- Fait : le menu déroulant "Alcool de base" (11 presets + Personnalisé) est remplacé par un
+  **toggle à deux options**, "Eau-de-vie" (86 % → 45 %) et "Liqueur" (96 % → 20 %), demandé par
+  l'utilisateur (public averti, menu jugé inutile). Boutons `.preset-btn` (style cohérent avec
+  FR/EN, `aria-pressed`), état dans `currentPreset` (`js/app.js`, `setPreset()`), persisté dans
+  `alcoocalc_inputs`. Modifier C₀ ou C₁ à la main désélectionne le toggle (état "personnalisé"
+  implicite) ; modifier V₀, S ou k le conserve (avant, tout champ repassait en "Personnalisé").
+  Aucun preset sélectionné par défaut (valeurs 50 % → 30 % inchangées). Presets inutilisés
+  (gin, vodka, rhum…) et traductions associées supprimés ; `populatePresets()` retiré. Un ancien
+  preset sauvegardé inconnu (ex. `gin`) retombe sur "aucun". Cache PWA bumpé à `alcoocalc-v32`.
+- Testé dans le navigateur : sélection applique les degrés, désélection sur C₀, conservation sur V₀,
+  libellés FR/EN, persistance après rechargement.
+
 ## 2026-09-20 (suite 3)
 - Fait : arrondi de `formatMass()` (`js/app.js`) ajusté — kg à 2 décimales (au lieu de 3), g à
   l'entier (au lieu d'1 décimale), sur demande de l'utilisateur. Cache PWA bumpé à `alcoocalc-v31`.

@@ -19,13 +19,14 @@ const MAX_HISTORY = 10;
 const els = {};
 let lastResults = null;
 let favoritesFilterActive = false;
+let currentPreset = 'custom';
 
 function $(id) {
   return document.getElementById(id);
 }
 
 function cacheEls() {
-  els.presetSelect = $('presetSelect');
+  els.presetButtons = document.querySelectorAll('.preset-btn');
   els.v0Field = $('v0Field');
   els.v0Range = $('v0Range');
   els.v0Number = $('v0Number');
@@ -96,6 +97,15 @@ function saveHistory(history) {
   }
 }
 
+function setPreset(key) {
+  currentPreset = SPIRIT_PRESETS[key] ? key : 'custom';
+  els.presetButtons.forEach((btn) => {
+    const active = btn.dataset.preset === currentPreset;
+    btn.classList.toggle('is-active', active);
+    btn.setAttribute('aria-pressed', String(active));
+  });
+}
+
 function readInputsFromForm() {
   return {
     v0: parseFloat(els.v0Number.value),
@@ -104,7 +114,7 @@ function readInputsFromForm() {
     cf: parseFloat(els.cfNumber.value),
     sconc: parseFloat(els.sconcNumber.value),
     k: parseFloat(els.kNumber.value),
-    preset: els.presetSelect.value,
+    preset: currentPreset,
     advancedOpen: els.advancedSection.open,
     formulaOpen: els.formulaSection.open,
   };
@@ -125,7 +135,7 @@ function applyInputsToForm(state) {
   els.sconcNumber.value = state.sconc;
   els.kRange.value = state.k;
   els.kNumber.value = state.k;
-  els.presetSelect.value = state.preset || 'custom';
+  setPreset(state.preset);
   els.advancedSection.open = !!state.advancedOpen;
   els.formulaSection.open = !!state.formulaOpen;
 }
@@ -391,7 +401,6 @@ function resetToDefaults() {
 }
 
 function onLanguageChanged(lang) {
-  populatePresets(els.presetSelect, lang);
   setFavoritesFilter(favoritesFilterActive);
   renderHistory();
   compute({ recordHistory: false });
@@ -404,9 +413,10 @@ function wireEvents() {
   syncPair(els.sconcRange, els.sconcNumber, () => compute({ recordHistory: false }));
   syncPair(els.kRange, els.kNumber, () => compute({ recordHistory: false }));
 
+  const alcoholInputs = [els.c0Number, els.c0Range, els.cfNumber, els.cfRange];
   [els.v0Number, els.c0Number, els.cfNumber, els.sconcNumber, els.kNumber].forEach((el) => {
     el.addEventListener('change', () => {
-      els.presetSelect.value = 'custom';
+      if (alcoholInputs.includes(el)) setPreset('custom');
       compute({ recordHistory: true });
     });
   });
@@ -417,20 +427,22 @@ function wireEvents() {
   });
   [els.v0Range, els.c0Range, els.cfRange, els.sconcRange, els.kRange].forEach((el) => {
     el.addEventListener('change', () => {
-      els.presetSelect.value = 'custom';
+      if (alcoholInputs.includes(el)) setPreset('custom');
       compute({ recordHistory: true });
     });
   });
 
-  els.presetSelect.addEventListener('change', () => {
-    const preset = applyPreset(els.presetSelect.value);
-    if (preset) {
+  els.presetButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const preset = applyPreset(btn.dataset.preset);
+      if (!preset) return;
+      setPreset(btn.dataset.preset);
       els.c0Range.value = preset.c0;
       els.c0Number.value = preset.c0;
       els.cfRange.value = preset.cf;
       els.cfNumber.value = preset.cf;
-    }
-    compute({ recordHistory: true });
+      compute({ recordHistory: true });
+    });
   });
 
   els.btnReset.addEventListener('click', resetToDefaults);
@@ -467,7 +479,6 @@ function initApp() {
   const lang = getLanguage();
   const savedInputs = loadInputs();
 
-  populatePresets(els.presetSelect, lang);
   applyInputsToForm(savedInputs);
   wireEvents();
   applyTranslations(lang);

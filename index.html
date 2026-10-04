@@ -36,8 +36,11 @@
 <main class="app-main">
 
   <section class="card card--presets" aria-labelledby="presetLabel">
-    <label id="presetLabel" class="card-title" for="presetSelect" data-i18n="presetLabel">Alcool de base</label>
-    <select id="presetSelect" class="terminal-select"></select>
+    <div id="presetLabel" class="card-title" data-i18n="presetLabel">Alcool de base</div>
+    <div id="presetToggle" class="preset-toggle" role="group" aria-labelledby="presetLabel">
+      <button type="button" class="preset-btn" data-preset="eaudevie" aria-pressed="false" data-i18n="preset_eaudevie">Eau-de-vie</button>
+      <button type="button" class="preset-btn" data-preset="liqueur" aria-pressed="false" data-i18n="preset_liqueur">Liqueur</button>
+    </div>
   </section>
 
   <section class="card card--params" aria-labelledby="inputsTitle">
