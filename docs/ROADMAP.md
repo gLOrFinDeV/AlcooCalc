@@ -1,7 +1,7 @@
 ---
 title: Roadmap du projet
 status: actif
-last-reviewed: 2026-09-07
+last-reviewed: 2026-10-04
 sources: []
 tags: [roadmap]
 ---
@@ -36,36 +36,34 @@ tags: [roadmap]
   maintenant en ligne, l'utilisateur peut le faire directement.
 
 ## 💬 À trancher
-- Portée exacte de l'historique en localStorage (actuellement : 10 derniers calculs, sans limite de
-  durée) — suffisant ou faut-il purger après un certain temps ?
 - Faut-il des icônes PWA soignées (actuellement des placeholders générés "AC" sur fond noir/vert) ?
 
-## 🚧 v2 — En cours (branche `v2`)
-- Développement v2 fait sur la branche git `v2` (créée le 2026-09-13), pour ne pas déployer de
-  travail en cours sur `main`/GitHub Pages. Merge dans `main` prévu une fois les fonctionnalités
-  ci-dessous testées et prêtes.
-- ✅ **Vert principal assombri** : `--terminal-green` passe de `#00FF41` à `#00CC52` (vert plus
-  sombre que l'original mais avec plus de contraste que `#00993D`, testé puis ajusté en navigateur
-  suite au retour de l'utilisateur).
-- ✅ **Résumé collant sur mobile** : bandeau fixe en bas d'écran (< 768px uniquement, masqué en
-  paysage sur petite hauteur) affichant Eau/Sucre en continu ; clic dessus → scroll fluide jusqu'à
-  la section Résultats complète. Voir [`css/styles.css`](../css/styles.css) et
-  [`js/app.js`](../js/app.js).
-- ✅ **Historique cliquable** : cliquer sur une entrée recharge tous ses paramètres (V₀/V₁, C₀, C₁,
-  sucre, k) dans les champs ; bouton "×" dédié pour supprimer une entrée individuellement, en plus
-  d'"Effacer l'historique" pour tout vider. Voir [`js/app.js`](../js/app.js).
-- ✅ **Favoris dans l'historique** : étoile par entrée (☆ vide → ★ pleine au clic, style vert du
-  thème) + étoile dans l'en-tête pour filtrer l'historique sur les favoris uniquement. Persisté
-  dans `localStorage` (champ `favorite` sur chaque entrée). Voir [`js/app.js`](../js/app.js).
+## ✅ v2 — Livrée (mergée dans `main` le 2026-10-04)
+- Développée sur la branche `v2` (créée le 2026-09-13) pour ne pas déployer de travail en cours sur
+  `main`/GitHub Pages, puis mergée.
+- ✅ **Vert principal assombri** : `--terminal-green` passe de `#00FF41` à `#00CC52` (plus de
+  contraste que `#00993D`, testé puis ajusté suite au retour de l'utilisateur).
+- ✅ **Résumé collant sur mobile** : bandeau en bas d'écran (< 768px) affichant Eau/Sucre en
+  continu ; clic → scroll fluide jusqu'aux Résultats.
+- ✅ **Historique** : cliquable (recharge tous les paramètres), suppression par entrée, **favoris**
+  (étoile + filtre), **nom de recette** (nommer une entrée en fait un favori), favoris conservés
+  sans limite (l'historique courant reste plafonné à 10 entrées), ascenseur aux couleurs du thème.
+- ✅ **Volume cible (V₁)** optionnel, notation harmonisée (V₁, C₁, S, ΔVₛ) avec symboles dans les
+  libellés de Résultats, valeurs affichées en L (mL) / kg (g).
+- ✅ **Toggle Eau-de-vie / Liqueur** à la place du menu des presets ; Eau-de-vie = dilution simple,
+  sans sucre (champs, résultats, formule et copie adaptés).
+- ✅ **Aide contextuelle (?)** au clic/tap sur Alcool de base, V₁, S et k.
+- ✅ **Accessibilité** : annonce des résultats aux lecteurs d'écran (`aria-live`), champ fautif
+  surligné en rouge (`aria-invalid`), curseurs nommés, focus visible, contrastes des bordures
+  (4,9:1), cibles tactiles de 44 px, lien d'évitement, `aria-pressed` FR/EN, `prefers-reduced-motion`.
+- ✅ **Splash screen au lancement** : pluie Matrix (canvas) ~3s, clic pour passer, sauté si
+  `prefers-reduced-motion`.
+- ✅ **Licence et partage** : PolyForm Noncommercial 1.0.0 (ADR
+  [0004](decisions/0004-licence-polyform-noncommercial.md)), README (licence, KaTeX, contribution,
+  auteur), pied de page « code source ouvert ».
 
-## 🔮 v2 — Pistes UX (validées par l'utilisateur le 2026-09-07)
-- ✅ **Résultat "collant" sur mobile** : implémenté, voir "v2 — En cours" ci-dessus.
-- ✅ **Historique cliquable** : implémenté, voir "v2 — En cours" ci-dessus.
-- **Aide contextuelle (?)** : petites infobulles expliquant les champs moins évidents ("Sucre visé",
-  "Coefficient d'expansion").
-- **Accessibilité + erreurs visibles** : `aria-live` pour que les lecteurs d'écran annoncent le
-  résultat après un changement ; surligner en rouge le champ fautif (ex. "Alcool cible") en cas
-  d'erreur, en plus du message déjà affiché.
-- ✅ **Splash screen au lancement** : implémenté — pluie Matrix (canvas) ~3s, ralentissement puis
-  fondu vers l'interface, clic pour passer, sauté si `prefers-reduced-motion`. Voir
-  [`js/splash.js`](../js/splash.js).
+## 🔜 v2.1 — Unités impériales (US) (en cours, branche `v2.1`)
+- Toggle **metric / imperial** : saisie et résultats en unités US (gallons/fl oz, livres/onces)
+  en plus du métrique ; calcul interne inchangé (métrique), conversion à l'affichage/saisie.
+- Questions à trancher : unités affichées (fl oz, pt, qt, gal ; oz, lb), arrondis, sucre en g/L →
+  équivalent US (oz/gal), coefficient k, conversion de l'historique, persistance du choix.

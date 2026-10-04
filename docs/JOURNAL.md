@@ -8,6 +8,13 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-10-04 (suite 13)
+- Fait : ROADMAP mise à jour (v2 passée en « Livrée », nouvelle section v2.1 « Unités impériales »,
+  question sur la portée de l'historique retirée car tranchée : 10 entrées courantes + favoris
+  illimités). Merge de `v2` dans `main` sur demande explicite de l'utilisateur (fast-forward, `main`
+  n'avait pas divergé) ; GitHub Pages redéploie automatiquement. Branche `v2.1` créée pour la suite.
+- Prochaine étape : v2.1 — toggle metric / imperial (unités US).
+
 ## 2026-10-04 (suite 12)
 - Fait (étape 3 — petits points d'accessibilité issus de l'audit) : focus clavier renforcé (règle
   globale `:focus-visible` = contour vert 2 px, en remplacement des `outline: none` + halo faible) ;
