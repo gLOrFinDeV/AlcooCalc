@@ -8,6 +8,10 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-10-04 (suite 19) — branche `v2.1`
+- Fait : libellé de la section extensible passé de « Conversion » à « Conversions » (FR et EN,
+  `conversionTitle`). Cache PWA bumpé à `alcoocalc-v50`.
+
 ## 2026-10-04 (suite 18) — branche `v2.1`
 - Fait : section extensible **« CONVERSION »** (`<details id="conversionSection">`) à la fin de la
   carte Réglages : table de référence dans les deux sens — volume (gal ↔ L, fl oz ↔ mL, 1 gal =
