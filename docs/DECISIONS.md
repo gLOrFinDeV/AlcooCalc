@@ -13,3 +13,4 @@ tags: [decisions]
 | [0001](decisions/0001-stack-technique.md) | Stack technique : HTML/CSS/JS vanilla + KaTeX + PWA | accepted | 2026-09-07 |
 | [0002](decisions/0002-formule-dilution-sucre.md) | Formule de dilution alcool + sucre | accepted | 2026-09-07 |
 | [0003](decisions/0003-deploiement-github-pages.md) | Déploiement sur GitHub Pages | accepted | 2026-09-07 |
+| [0004](decisions/0004-licence-polyform-noncommercial.md) | Licence PolyForm Noncommercial 1.0.0 | accepted | 2026-10-04 |

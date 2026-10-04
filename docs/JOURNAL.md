@@ -8,6 +8,19 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-10-04 (suite 6)
+- Décidé : licence **PolyForm Noncommercial 1.0.0** (ADR 0004) — l'utilisateur veut partager le
+  code mais interdire sa reprise commerciale. Constat : le dépôt n'avait pas de fichier `LICENSE`
+  (README disait "MIT", ce qui aurait de toute façon autorisé le commercial).
+- Fait : ajout de `LICENSE` (texte officiel PolyForm + `Required Notice` copyright gLOrFinD 2026)
+  et de `js/katex/LICENSE` (MIT de KaTeX 0.16.9, récupérée depuis le dépôt officiel). README
+  réécrit : section Licence (résumé en clair + précision "source-available", pas "open source" au
+  sens OSI), composants tiers (KaTeX reste sous MIT), contribution, et fonctionnalités mises à jour
+  (toggle Eau-de-vie/Liqueur, historique nommé/favoris). Pas de bump du cache PWA (aucun fichier
+  de l'app modifié).
+- Prochaine étape : trancher le pied de page "100% open source" (inexact avec cette licence) ;
+  vérifier côté GitHub que le dépôt est public et ajouter une description/topics.
+
 ## 2026-10-04 (suite 5)
 - Fait : pied de page FR — "with love" traduit en "avec amour" ("100% open source, avec amour
   gLOrFinD · …") ; la version EN garde "with love". Cache PWA bumpé à `alcoocalc-v37`.
