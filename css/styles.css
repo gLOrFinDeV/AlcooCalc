@@ -943,3 +943,90 @@ input[type='range']::-moz-range-thumb {
 .conv-row span {
   white-space: nowrap;
 }
+
+/* Petits écrans : polices et champs un cran plus petits, plus d'espace entre les blocs, valeurs des
+   résultats sur une seule ligne (passent sous leur libellé s'il n'y a pas la place à côté). */
+@media (max-width: 480px) {
+  .app-main {
+    gap: 1.15rem;
+  }
+
+  .card {
+    padding: 1rem 1rem;
+  }
+
+  .field {
+    margin-top: 1.2rem;
+  }
+
+  label {
+    font-size: 0.8rem;
+  }
+
+  .field__controls {
+    grid-template-columns: 1fr 4.8rem;
+    gap: 0.8rem;
+  }
+
+  .terminal-select,
+  input[type='number'] {
+    min-height: 2.5rem;
+    padding: 0.4rem 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .seg-btn {
+    min-height: 2.5rem;
+    font-size: 0.85rem;
+  }
+
+  .btn,
+  .btn--link {
+    min-height: 2.5rem;
+    font-size: 0.8rem;
+  }
+
+  .setting--wide,
+  .settings-pair {
+    margin-top: 1.1rem;
+  }
+
+  .settings-pair {
+    margin-top: 0;
+  }
+
+  .advanced summary {
+    padding: 0.6rem 0;
+    font-size: 0.8rem;
+  }
+
+  .result-row {
+    flex-wrap: wrap;
+    align-items: baseline;
+    row-gap: 0.2rem;
+    padding: 0.7rem 0;
+  }
+
+  .result-row__label {
+    flex: 1 1 8rem;
+    font-size: 0.8rem;
+  }
+
+  .result-row__value {
+    flex: 0 1 auto;
+    margin-left: auto;
+    font-size: 0.95rem;
+    white-space: nowrap;
+  }
+
+  .actions {
+    margin-top: 1.2rem;
+  }
+
+  .history-row__edit,
+  .history-row__favorite,
+  .history-row__delete,
+  .history-filter-star {
+    min-width: 2.5rem;
+  }
+}

@@ -8,6 +8,24 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-10-05 — branche `v2.1.1`
+- Retour de l'utilisateur après test sur mobile : l'affichage paraît « trop gros » depuis les
+  modifications d'accessibilité, surtout la carte Résultats dont les valeurs passent sur deux lignes
+  (ex. « 1.80 L (1797 / mL) »). Causes mesurées à 375 px : champs et boutons portés à 44 px (champs
+  38 → 44 px), libellés de résultats plus longs (symboles ΔVₛ, mₛ…) et valeurs en double unité
+  (L (mL), fl oz (gal)) qui dépassent la place disponible.
+- Fait : bloc `@media (max-width: 480px)` dans `css/styles.css` — polices un cran plus petites
+  (libellés 0,8 rem, valeurs de résultats 0,95 rem), champs, boutons et toggles à 40 px au lieu de 44
+  (colonne des champs 4,8 rem), plus d'espace entre les cartes (1,15 rem), entre les paramètres
+  (1,2 rem) et dans les lignes de résultats ; les valeurs de résultats restent sur une seule ligne
+  (`nowrap`) et passent sous leur libellé quand il n'y a pas la place à côté (cas des unités US). Mesure
+  après correctif : plus aucune valeur coupée en métrique ni en US, pas de défilement horizontal,
+  carte Résultats 397 → 367 px, page 1674 → 1643 px. Desktop inchangé.
+- Compromis assumé : les cibles tactiles mobiles passent de 44 à 40 px (au-dessus du minimum WCAG AA de
+  24 px, un peu sous les 44 px recommandés) à la demande de l'utilisateur.
+- Pied de page passé à « v2.1.1 » (règle : mettre la version à jour à chaque release). Cache PWA
+  bumpé à `alcoocalc-v54`.
+
 ## 2026-10-04 (suite 23)
 - Fait : **v2.1 mergée dans `main` et publiée** sur demande explicite de l'utilisateur (« merge et
   commit en prod »). ROADMAP : v2.1 passée en « Livrée », nouvelle section « À faire » (test sur

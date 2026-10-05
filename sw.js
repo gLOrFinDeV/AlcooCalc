@@ -1,6 +1,6 @@
 'use strict';
 
-const CACHE_NAME = 'alcoocalc-v53';
+const CACHE_NAME = 'alcoocalc-v54';
 
 const CORE_ASSETS = [
   './',
