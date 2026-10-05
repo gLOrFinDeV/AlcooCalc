@@ -8,6 +8,13 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-10-05 (suite 4)
+- Fait : **v2.1.1 mergée dans `main` et publiée** sur demande explicite de l'utilisateur (« merge dans
+  main et commit en prod »). Merge en fast-forward (`bde7dd6` → `bde1d2c`), vérifié sur
+  https://glorfindev.github.io/AlcooCalc/ : `alcoocalc-v57` servi, pied de page « v2.1.1 ». Contenu :
+  compaction mobile (polices, champs, espacement, valeurs de résultats sur une ligne), « ? » et
+  libellés à une taille unique (`--label-size`), champs numériques alignés à droite.
+
 ## 2026-10-05 (suite 3) — branche `v2.1.1`
 - Fait : les valeurs des champs numériques (V₀, V₁, C₀, C₁, S, k) sont alignées à droite
   (`text-align: right` sur `input[type='number']`, `css/styles.css`), à la demande de l'utilisateur ;

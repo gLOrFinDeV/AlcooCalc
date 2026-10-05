@@ -72,6 +72,12 @@ tags: [roadmap]
 - ✅ **Splash screen** recalé sur la nouvelle interface (caractères figés = UI finale en anglais).
 - ✅ Pied de page « v2.1 code source ouvert / source code available ».
 
+## ✅ v2.1.1 — Livrée (mergée dans `main` le 2026-10-05)
+- ✅ Affichage mobile plus compact et aéré (≤ 480 px) : polices et champs un cran plus petits, valeurs
+  de résultats toujours sur une ligne.
+- ✅ Libellés (LANGUAGE/UNITS/DILUTION, WATER/SUGAR, Conversions) et boutons « ? » sur une seule taille
+  (`--label-size`) ; champs numériques alignés à droite ; pied de page « v2.1.1 ».
+
 ## 🔜 À faire
 - Test visuel sur un téléphone réel (au-delà de l'émulation du navigateur).
 - Mise à jour du service worker : prévenir l'utilisateur (« Nouvelle version disponible ») au lieu de
