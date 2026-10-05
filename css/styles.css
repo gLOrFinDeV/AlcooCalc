@@ -165,7 +165,8 @@ body.app-ready .app-content {
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
-  min-height: 1.75rem;
+  --label-size: 0.72rem;
+  min-height: 1.5rem;
   margin-bottom: 0.35rem;
 }
 
@@ -313,6 +314,7 @@ button:focus-visible {
 }
 
 .field__head {
+  --label-size: 0.85rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -341,19 +343,27 @@ input[type='number'][aria-invalid='true'] {
 }
 
 .help-btn {
+  position: relative;
   flex-shrink: 0;
-  width: 1.75rem;
-  height: 1.75rem;
+  width: var(--label-size, 0.85rem);
+  height: var(--label-size, 0.85rem);
   padding: 0;
   border-radius: 50%;
   background: transparent;
   border: 1px solid var(--terminal-dim);
   color: var(--terminal-green);
   font-family: var(--font-mono);
-  font-size: 0.85rem;
+  font-size: calc(var(--label-size, 0.85rem) * 0.8);
   line-height: 1;
   letter-spacing: 0;
   cursor: pointer;
+}
+
+/* zone de toucher élargie (≥ 24 px) autour du petit rond */
+.help-btn::after {
+  content: "";
+  position: absolute;
+  inset: -0.55rem;
 }
 
 .help-btn:hover,
@@ -961,6 +971,10 @@ input[type='range']::-moz-range-thumb {
 
   label {
     font-size: 0.8rem;
+  }
+
+  .field__head {
+    --label-size: 0.8rem;
   }
 
   .field__controls {

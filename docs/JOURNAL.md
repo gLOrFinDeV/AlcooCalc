@@ -8,6 +8,18 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-10-05 (suite) — branche `v2.1.1`
+- Fait : les boutons « ? » d'aide contextuelle sont redimensionnés à la taille du texte du libellé
+  voisin (demande de l'utilisateur) : le diamètre du rond = la taille de police du libellé (0,72 rem
+  ≈ 11,5 px pour les réglages, 0,85 rem ≈ 12,8 px pour les paramètres, 0,8 rem ≈ 12,8 → 12,8 px en
+  mobile), le « ? » à 80 % de cette taille. Implémenté avec une variable `--label-size` portée par
+  `.setting__head` / `.field__head` (`css/styles.css`), au lieu des 28 px fixes. La zone de toucher
+  reste de ~27-28 px (pseudo-élément `::after` transparent, ≥ 24 px WCAG AA) autour du petit rond.
+  Hauteur minimale de l'en-tête de réglage ramenée de 1,75 à 1,5 rem. Cache PWA bumpé à
+  `alcoocalc-v55`.
+- Mesuré dans le navigateur : ronds de 11,5 px (réglages) et 12,8 px (paramètres), glyphe 9,2 / 10,2 px,
+  zone de toucher 27-28 px ; rendu vérifié.
+
 ## 2026-10-05 — branche `v2.1.1`
 - Retour de l'utilisateur après test sur mobile : l'affichage paraît « trop gros » depuis les
   modifications d'accessibilité, surtout la carte Résultats dont les valeurs passent sur deux lignes
