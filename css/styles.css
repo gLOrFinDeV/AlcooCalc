@@ -6,6 +6,7 @@
   --text-primary: #e0ffe0;
   --border-color: #003b00;
   --error-color: #ff3b30;
+  --label-size: 0.85rem;
   --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', Consolas, monospace;
 }
 
@@ -165,14 +166,13 @@ body.app-ready .app-content {
   align-items: center;
   justify-content: space-between;
   gap: 0.5rem;
-  --label-size: 0.72rem;
   min-height: 1.5rem;
   margin-bottom: 0.35rem;
 }
 
 .setting__label {
   color: var(--terminal-dim);
-  font-size: 0.72rem;
+  font-size: var(--label-size);
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
@@ -239,7 +239,7 @@ body.app-ready .app-content {
 
 label {
   color: var(--text-primary);
-  font-size: 0.85rem;
+  font-size: var(--label-size);
 }
 
 .unit {
@@ -314,7 +314,6 @@ button:focus-visible {
 }
 
 .field__head {
-  --label-size: 0.85rem;
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -824,7 +823,7 @@ input[type='range']::-moz-range-thumb {
   }
 
   .sticky-summary__label {
-    font-size: 0.65rem;
+    font-size: var(--label-size);
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: var(--terminal-dim);
@@ -935,7 +934,7 @@ input[type='range']::-moz-range-thumb {
 .conv-group {
   margin-top: 0.7rem;
   color: var(--terminal-dim);
-  font-size: 0.7rem;
+  font-size: var(--label-size);
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
@@ -969,11 +968,7 @@ input[type='range']::-moz-range-thumb {
     margin-top: 1.2rem;
   }
 
-  label {
-    font-size: 0.8rem;
-  }
-
-  .field__head {
+  :root {
     --label-size: 0.8rem;
   }
 

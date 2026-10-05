@@ -8,6 +8,19 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-10-05 (suite 2) — branche `v2.1.1`
+- Question de l'utilisateur : pourquoi LANGUAGE / UNITS / DILUTION / WATER / SUGAR étaient-ils plus
+  petits (11,5 px) que les autres libellés (12,8 px) ? Réponse : aucune raison fonctionnelle, seulement
+  un héritage de style (petits libellés « surtitre » en 0,72 rem, 0,65 rem pour WATER/SUGAR du
+  résumé collant). Fait : une seule variable `--label-size` (`:root`, `css/styles.css`) — 0,85 rem
+  (13,6 px) par défaut et 0,8 rem (12,8 px) à ≤ 480 px — alimente désormais les libellés de champs,
+  `.setting__label` (LANGUAGE/UNITS/DILUTION), `.sticky-summary__label` (WATER/SUGAR),
+  `.conv-group` (VOLUME/MASS/SUGAR/ALCOHOL de Conversions, même style) et le diamètre des boutons
+  « ? ». Les unités (« L », « g/L », « % ») restent plus petites volontairement. Cache PWA bumpé à
+  `alcoocalc-v56`.
+- Mesuré à 375 px : tous ces libellés et le rond « ? » à 12,8 px (glyphe 10,2 px), pas de défilement
+  horizontal. Sur desktop, ils passent de 11,5 à 13,6 px, comme les libellés de champs.
+
 ## 2026-10-05 (suite) — branche `v2.1.1`
 - Fait : les boutons « ? » d'aide contextuelle sont redimensionnés à la taille du texte du libellé
   voisin (demande de l'utilisateur) : le diamètre du rond = la taille de police du libellé (0,72 rem
