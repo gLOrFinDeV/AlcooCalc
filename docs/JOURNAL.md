@@ -8,6 +8,15 @@ tags: [journal]
 
 # Journal — AlcooCalc
 
+## 2026-10-05 (suite 3) — branche `v2.1.1`
+- Fait : les valeurs des champs numériques (V₀, V₁, C₀, C₁, S, k) sont alignées à droite
+  (`text-align: right` sur `input[type='number']`, `css/styles.css`), à la demande de l'utilisateur ;
+  le « — » du champ V₁ vide suit. `js/splash.js` gérait déjà `text-align: right` pour les caractères
+  de la pluie. Cache PWA bumpé à `alcoocalc-v57`.
+- Vérifié dans le navigateur : les six champs en `right`, rendu mobile.
+- Prochaine étape : validation de la branche `v2.1.1` sur téléphone réel, puis merge dans `main` sur feu
+  vert (pied de page déjà à « v2.1.1 »).
+
 ## 2026-10-05 (suite 2) — branche `v2.1.1`
 - Question de l'utilisateur : pourquoi LANGUAGE / UNITS / DILUTION / WATER / SUGAR étaient-ils plus
   petits (11,5 px) que les autres libellés (12,8 px) ? Réponse : aucune raison fonctionnelle, seulement
